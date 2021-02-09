@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import NavbarWidget from './widgets/navbar/NavbarWidget';
 import HomePage from './pages/HomePage';
+import LoginPage from  './pages/LoginPage'
 import { useState } from 'react';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Switch>
         {/* <Route path="/demo1" component={DemoOne} /> */}
         <Route path="/home" component={HomePage} />
+        <Route path="/login" component={() => <LoginPage updateNav={updateNav}></LoginPage>} />
         {/* <Route component={Menu} /> */}
       </Switch>
     </div>

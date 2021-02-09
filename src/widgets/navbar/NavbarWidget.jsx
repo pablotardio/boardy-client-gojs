@@ -1,81 +1,126 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom'; //Se debe instalar el @types/PAQUETE para reconocer sus jsx props etc
-/** @type {import('react-router-dom').{Link}} */
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import { Link, useHistory } from "react-router-dom"; //Se debe instalar el @types/PAQUETE para reconocer sus jsx props etc
+
+import MenuLateralWidget from "./MenuLateralWidget";
+
 const NavbarWidget = ({ parentStateVistas, updateNav }) => {
-    const handleClick = () => {
-        console.log('Cerrando sesion');
-        localStorage.clear()
-        updateNav()
-    }
-    /**
-     * Para que dependiendo si esta iniciada la sesion o no se devuelva la respectiva iniciar o cerrar
-     * sesion
-     */
-    const _retornoDeSesion = () => {
-        console.log(parentStateVistas);
-        if (parentStateVistas?.length === 0 || parentStateVistas?.vistas == null) {
-            return (
-                    <Button onClick={handleClick} color="inherit">
-                        Iniciar Sesion
-                    <Link  to={"/login"} > </Link >
-                    </Button>
-                    )
-        }
-        else {
-            return (
-                
-               
-                    <Button onClick={handleClick} color="inherit">
-                        Cerrar sesion
-                     <Link  to={"/home"} ></Link>
-                    </Button>
-               
-            )
+	let history = useHistory();
+	const [state, setState] = React.useState({
+		top: false,
+		left: false,
+		bottom: false,
+		right: false,
+	});
 
+	/**
+	 * Function to administrate the show or hidden of the side menu
+	 */
+	const toggleDrawer = (anchor, open) => (event) => {
+		if (
+			event.type === "keydown" &&
+			(event.key === "Tab" || event.key === "Shift")
+		) {
+			return;
+		}
 
-        }
-    }
-    const classes = useStyles();
-    return (
-        <div>
-            <AppBar position="static">
-                <Toolbar variant="dense">
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Boardy Home
-                    </Typography>
-                        {
-                        parentStateVistas?.map(item=> (<Button onClick={handleClick} color="inherit">
-                        Iniciar Sesion
-                    <Link  to={"/login"} > </Link >
-                    </Button>))
-                         }
-                    {_retornoDeSesion()}
+		setState({ ...state, [anchor]: open });
+	};
+	const useStyles = makeStyles((theme) => ({
+		list: {
+			width: 250,
+		},
+		fullList: {
+			width: "auto",
+		},
+		root: {
+			flexGrow: 1,
+		},
+		menuButton: {
+			marginRight: theme.spacing(2),
+		},
+		title: {
+			flexGrow: 1,
+		},
+	}));
 
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
-}
+	const handleClick = {
+		login: () => {
+			history.push("/login");
+		},
+		logout: () => {
+			console.log("Cerrando sesion");
+			localStorage.clear();
+			updateNav();
+		},
+	};
+	/**
+	 * Para que dependiendo si esta iniciada la sesion o no se devuelva la respectiva iniciar o cerrar
+	 * sesion
+	 */
+	const _retornoDeSesion = () => {
+		console.log(parentStateVistas);
+		if (parentStateVistas?.length === 0 || parentStateVistas == null) {
+			return (
+				<Button onClick={handleClick.login} color="inherit">
+					Iniciar Sesion
+				</Button>
+			);
+		} else {
+			return (
+				<Button onClick={handleClick.logout} color="inherit">
+					Cerrar sesion
+					<Link to={"/home"}></Link>
+				</Button>
+			);
+		}
+	};
+	const _retornarBotonMenu = () => {
+		const anchor = "left";
+		return parentStateVistas != null ? (
+			<React.Fragment key={anchor}>
+				<IconButton
+					onClick={toggleDrawer(anchor, true)}
+					edge="start"
+					className={classes.menuButton}
+					color="inherit"
+					aria-label="menu"
+				>
+					<MenuIcon />
+				</IconButton>
+				<MenuLateralWidget
+					menuItems={parentStateVistas}
+					state={state}
+					anchor={anchor}
+					toggleDrawer={toggleDrawer}
+				></MenuLateralWidget>
+			</React.Fragment>
+		) : (
+			""
+		);
+	};
+	const classes = useStyles();
+	return (
+		<div>
+			<AppBar position="static">
+				<Toolbar variant="dense">
+					{_retornarBotonMenu()}
+
+					<Typography variant="h6" className={classes.title}>
+						Boardy Home
+					</Typography>
+
+					{_retornoDeSesion()}
+				</Toolbar>
+			</AppBar>
+		</div>
+	);
+};
 
 export default NavbarWidget;

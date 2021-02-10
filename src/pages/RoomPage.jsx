@@ -7,7 +7,7 @@ function RoomPage(props) {
   const { roomId,password } = props.match.params;
  
   const {mousesCoord,
-    emitMouseActivity }=useRoom(roomId,roomId);
+    emitMouseActivity }=useRoom(roomId,password);
   //Component did mount
   useEffect(() => {
     console.log();

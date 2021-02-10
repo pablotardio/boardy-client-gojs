@@ -6,17 +6,34 @@ import { Height } from "@material-ui/icons";
 import FormDialogWidget from '../widgets/MenuPrincipal/FormDialogWidget'
 const MenuPrincipalPage = () => {
 	const [openNew, setOpenNew] = React.useState(false);
+	const [openJoin, setOpenJoin] = React.useState(false);
+	const [form, setForm] = React.useState({codigo:'',password:''});
 	const newBoard={
 		 handleClickOpen : () => {
 			setOpenNew(true);
 		  },
 		  handleClose :() => {
 			setOpenNew(false);
+			setForm({codigo:'',password:''});
+		  },
+		  handleSubmit:()=>{
+			  console.log(form);
 		  }
 	}
+	const joinBoard={
+		handleClickOpen : () => {
+			setOpenJoin(true);
+		 },
+		 handleClose :() => {
+			setOpenJoin(false);
+			setForm({codigo:'',password:''});
+		 }
+   }
 	return (
 		<div>
 			<FormDialogWidget 
+			form={form}
+			setForm={setForm}
 			open={openNew}
 			handleClickOpen={newBoard.handleClickOpen}
 			handleClose={newBoard.handleClose}
@@ -24,7 +41,15 @@ const MenuPrincipalPage = () => {
 			 description="Necesitamos los siguientes datos para crear una nueva sala de Boardy">
 				
 			</FormDialogWidget>
-
+			<FormDialogWidget 
+			form={form}
+			setForm={setForm}
+			open={openJoin}
+			handleClickOpen={joinBoard.handleClickOpen}
+			handleClose={joinBoard.handleClose}
+			 title="Unirse a Sesion Boardy" 
+			 description="Necesitamos los siguientes datos para unirse a una sala de Boardy">
+			</FormDialogWidget>
 			<div style={{ paddingTop: "2vmin ", paddingInline: "10%" }}>
 				<Grid container justify="center">
 					<Grid item xs={6} style={{ paddingBlock: "1vmin " }} >
@@ -46,6 +71,7 @@ const MenuPrincipalPage = () => {
 									variant="contained"
 									size="large"
 									color="primary"
+									handleSubmit={newBoard.handleSubmit}
 									startIcon={<AddToQueueIcon />}
 								>
 									Nueva
@@ -57,6 +83,7 @@ const MenuPrincipalPage = () => {
 						<Grid container justify="space-around">
 							<Grid item xs={1}>
 								<Button 
+									onClick={joinBoard.handleClickOpen}
 									variant="contained"
 									size="large"
 									color="primary"

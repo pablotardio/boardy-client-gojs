@@ -7,6 +7,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import {home} from "@material-ui/icons";
 import getIcon from '../../providers/icon.provider'
+import { Link, useHistory } from "react-router-dom";
 /**
  *
  * @param {*} param0
@@ -14,7 +15,14 @@ import getIcon from '../../providers/icon.provider'
  * @param toggleDrawer the function that will show or hide the drawer
  */
 const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
-	const list = (anchor) => (
+	const history=useHistory();
+	
+	const list = (anchor) => {
+		const rutear=(item)=>{
+			history.push(item.ruta)
+			console.log(item.ruta);
+		}
+		return(
 		<div
 			role="presentation"
 			onClick={toggleDrawer(anchor, false)}
@@ -22,7 +30,8 @@ const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
 		>
 			<List>
 				{menuItems?.map((item, index) => (
-					<ListItem button key={item.id}>
+					
+					<ListItem button  key={item.id} onClick={	()=>rutear(item)}>
 						<ListItemIcon>
 							{getIcon(item.icono)}
 							{/* (index % 2 === 0 ? <InboxIcon /> : <MailIcon />)*/}
@@ -44,7 +53,7 @@ const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
 				))}
 			</List>
 		</div>
-	);
+	)};
 
 	return (
 		<div>

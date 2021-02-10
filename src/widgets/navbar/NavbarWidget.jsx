@@ -65,7 +65,7 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 	 * sesion
 	 */
 	const _retornoDeSesion = () => {
-		console.log(parentStateVistas);
+		// console.log(parentStateVistas);
 		if (parentStateVistas?.length === 0 || parentStateVistas == null) {
 			return (
 				<Button onClick={handleClick.login} color="inherit">
@@ -84,7 +84,7 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 	const _retornarBotonMenu = () => {
 		const anchor = "left";
 		return parentStateVistas != null ? (
-			<React.Fragment key={anchor}>
+			<div key={anchor}>
 				<IconButton
 					onClick={toggleDrawer(anchor, true)}
 					edge="start"
@@ -100,7 +100,7 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 					anchor={anchor}
 					toggleDrawer={toggleDrawer}
 				></MenuLateralWidget>
-			</React.Fragment>
+			</div>
 		) : (
 			""
 		);

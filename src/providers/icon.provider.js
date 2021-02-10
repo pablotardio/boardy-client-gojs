@@ -4,7 +4,7 @@ const iconList = {
 	board: <FeaturedPlayListOutlined/>,
 };
 const getIcon = (iconName) => {
-    console.log(iconName);
+    // console.log(iconName);
 	return iconList[iconName];
 };
 export default getIcon;

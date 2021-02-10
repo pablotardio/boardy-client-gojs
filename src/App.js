@@ -23,7 +23,7 @@ function App() {
         <Route path="/home" component={HomePage} />
         <Route path="/mainMenu" component={MenuPrincipalPage} />
         <Route path="/login" component={() => <LoginPage updateNav={updateNav}></LoginPage>} />
-        <Route exact path="/room/:roomId" component={RoomPage} />
+        <Route exact path="/room/:roomId/:password" component={RoomPage} />
         {/* <Route component={Menu} /> */}
       </Switch>
     </div>

@@ -21,7 +21,7 @@ const MenuPrincipalPage = () => {
 		  },
 		  handleSubmit:()=>{
 			  console.log(form);
-			  history.push('/room/1')
+			  history.push(`/room/${form.codigo}/${form.password}`)
 		  }
 	}
 	const joinBoard={

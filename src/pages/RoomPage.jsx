@@ -3,11 +3,11 @@ import React, {  useEffect } from "react";
 import useRoom from '../hooks/useRoom'
 
 
-function RoomPage() {
- 
+function RoomPage(props) {
+  const { roomId,password } = props.match.params;
  
   const {mousesCoord,
-    emitMouseActivity }=useRoom('hola1','pass2');
+    emitMouseActivity }=useRoom(roomId,roomId);
   //Component did mount
   useEffect(() => {
     console.log();

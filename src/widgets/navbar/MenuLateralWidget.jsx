@@ -5,9 +5,9 @@ import Drawer from "@material-ui/core/Drawer";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import {home} from "@material-ui/icons";
+
 import getIcon from '../../providers/icon.provider'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 /**
  *
  * @param {*} param0

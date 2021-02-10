@@ -2,12 +2,15 @@ import { Grid, Button } from "@material-ui/core";
 import React from "react";
 import AirplayIcon from "@material-ui/icons/Airplay";
 import AddToQueueIcon from "@material-ui/icons/AddToQueue";
-import { Height } from "@material-ui/icons";
+
 import FormDialogWidget from '../widgets/MenuPrincipal/FormDialogWidget'
+import { useHistory } from "react-router-dom";
 const MenuPrincipalPage = () => {
 	const [openNew, setOpenNew] = React.useState(false);
 	const [openJoin, setOpenJoin] = React.useState(false);
 	const [form, setForm] = React.useState({codigo:'',password:''});
+	const history=useHistory();
+
 	const newBoard={
 		 handleClickOpen : () => {
 			setOpenNew(true);
@@ -18,6 +21,7 @@ const MenuPrincipalPage = () => {
 		  },
 		  handleSubmit:()=>{
 			  console.log(form);
+			  history.push('/room/1')
 		  }
 	}
 	const joinBoard={
@@ -27,7 +31,10 @@ const MenuPrincipalPage = () => {
 		 handleClose :() => {
 			setOpenJoin(false);
 			setForm({codigo:'',password:''});
-		 }
+		 },
+		 handleSubmit:()=>{
+			console.log(form);
+		}
    }
 	return (
 		<div>
@@ -37,6 +44,7 @@ const MenuPrincipalPage = () => {
 			open={openNew}
 			handleClickOpen={newBoard.handleClickOpen}
 			handleClose={newBoard.handleClose}
+			handleSubmit={newBoard.handleSubmit}
 			 title="Nueva Sesion Boardy" 
 			 description="Necesitamos los siguientes datos para crear una nueva sala de Boardy">
 				
@@ -47,6 +55,7 @@ const MenuPrincipalPage = () => {
 			open={openJoin}
 			handleClickOpen={joinBoard.handleClickOpen}
 			handleClose={joinBoard.handleClose}
+			handleSubmit={joinBoard.handleSubmit}
 			 title="Unirse a Sesion Boardy" 
 			 description="Necesitamos los siguientes datos para unirse a una sala de Boardy">
 			</FormDialogWidget>
@@ -71,7 +80,7 @@ const MenuPrincipalPage = () => {
 									variant="contained"
 									size="large"
 									color="primary"
-									handleSubmit={newBoard.handleSubmit}
+									
 									startIcon={<AddToQueueIcon />}
 								>
 									Nueva

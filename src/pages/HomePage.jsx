@@ -9,6 +9,7 @@ const HomePage = () => {
 			<Grid container justify="center" >
 				<Grid item xs={2}>
 					<img
+						alt=''
 						style={{ maxWidth: "100%" }}
 						src="https://www.iconbunny.com/icons/media/catalog/product/3/1/3157.12-office-board-icon-iconbunny.jpg"
 					/>

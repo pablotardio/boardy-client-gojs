@@ -25,8 +25,8 @@ const MenuLateralWidget = ({ children,menuItems,state, anchor, toggleDrawer }) =
 		return(
 		<div
 			role="presentation"
-			onClick={toggleDrawer(anchor, false)}
-			onKeyDown={toggleDrawer(anchor, false)}
+			// onClick={toggleDrawer(anchor, false)} esto hacia que al hacer click en el drawer se oculte
+			// onKeyDown={toggleDrawer(anchor, false)} esto hace que al escribir el drawer se oculte
 		>
 			<List>
 				{children}
@@ -58,7 +58,8 @@ const MenuLateralWidget = ({ children,menuItems,state, anchor, toggleDrawer }) =
 
 	return (
 		<div>
-			<Drawer
+			<Drawer variant="temporary" 
+				
 				anchor={anchor}
 				open={state[anchor]}
 				onClose={toggleDrawer(anchor, false)}

@@ -6,12 +6,13 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import {Message} from "@material-ui/icons";
+import { Message } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom"; //Se debe instalar el @types/PAQUETE para reconocer sus jsx props etc
 
 import MenuLateralWidget from "./MenuLateralWidget";
+import { Chip, ListItem } from "@material-ui/core";
 
-const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
+const NavbarWidget = ({ parentStateVistas, isChatActive, updateNav }) => {
 	let history = useHistory();
 	const [state, setState] = React.useState({
 		top: false,
@@ -59,7 +60,6 @@ const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
 			console.log("Cerrando sesion");
 			localStorage.clear();
 			updateNav();
-	
 		},
 	};
 	/**
@@ -109,7 +109,7 @@ const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
 	};
 	const _retornarBotonChat = () => {
 		const anchor = "right";
-		return (isChatActive ) ? (
+		return isChatActive ? (
 			<div key={anchor}>
 				<IconButton
 					onClick={toggleDrawer(anchor, true)}
@@ -121,11 +121,18 @@ const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
 					<Message />
 				</IconButton>
 				<MenuLateralWidget
-					menuItems={parentStateVistas}
 					state={state}
 					anchor={anchor}
 					toggleDrawer={toggleDrawer}
-				></MenuLateralWidget>
+				>
+					<ListItem>Chat</ListItem>
+					<ListItem>
+						<Chip
+							label="No se ha enviado ningun mensaje"
+							color="secondary"
+						/>
+					</ListItem>
+				</MenuLateralWidget>
 			</div>
 		) : (
 			""
@@ -137,7 +144,6 @@ const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
 			<AppBar position="static">
 				<Toolbar variant="dense">
 					{_retornarBotonMenu()}
-					
 
 					<Typography variant="h6" className={classes.title}>
 						Boardy Home

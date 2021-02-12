@@ -1,25 +1,50 @@
-import React, { useEffect } from "react";
+import { Chip, Fab,ListItem } from "@material-ui/core";
+import { Message } from "@material-ui/icons";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
+import MenuLateralWidget from "../widgets/navbar/MenuLateralWidget";
 
-function RoomPage({setShowChat}) {
-  //    se puede obtener los parametros de un compenente que se linkee sin ninguna prop
-  //    const { roomId, password } = props.match.params;
-  // se puede hacer con mas de una prop 
-  // https://stackoverflow.com/questions/54114416/how-to-access-this-props-match-params-along-with-other-props
-	
-    const {roomId,password}=useParams()
-  const { mousesCoord, emitMouseActivity } = useRoom(roomId, password);
+function RoomPage({ setShowChat }) {
+	//    se puede obtener los parametros de un compenente que se linkee sin ninguna prop
+	//    const { roomId, password } = props.match.params;
+	// se puede hacer con mas de una prop
+	// https://stackoverflow.com/questions/54114416/how-to-access-this-props-match-params-along-with-other-props
+	const [state, setState] = useState({
+		top: false,
+		left: false,
+		bottom: false,
+		right: false,
+	});
+  const anchor="right";
+	const { roomId, password } = useParams();
+	const { mousesCoord, emitMouseActivity } = useRoom(roomId, password);
+
 	//Component did mount
 	useEffect(() => {
 		console.log();
 		setShowChat(true);
-
+		// toggleDrawerChat
 		//Component wil unmount
 		return () => {
 			setShowChat(false);
 		};
 	}, []);
+	/**
+	 * Funcion para mostrar el drawer que se le envia al nav
+	 * @param {*} anchor
+	 * @param {*} open
+	 */
+	const toggleDrawerChat = (anchor, open) => (event) => {
+		if (
+			event.type === "keydown" &&
+			(event.key === "Tab" || event.key === "Shift")
+		) {
+			return;
+		}
+
+		setState({ ...state, [anchor]: open });
+	};
 
 	return (
 		<div
@@ -45,6 +70,22 @@ function RoomPage({setShowChat}) {
 				// return <div key={item.session_id}> aqui ta el mouse {i}  {item.session_id}
 				// coods x: {item.coords.x}  y: {item.coords.y}</div>
 			})}
+			<Fab onClick={toggleDrawerChat(anchor, true)} color="primary" aria-label="add">
+				<Message />
+			</Fab>
+      <MenuLateralWidget
+					state={state}
+					anchor={anchor}
+					toggleDrawer={toggleDrawerChat}
+				>
+					<ListItem>Chat</ListItem>
+					<ListItem>
+						<Chip
+							label="No se ha enviado ningun mensaje"
+							color="secondary"
+						/>
+					</ListItem>
+				</MenuLateralWidget>
 		</div>
 	);
 }

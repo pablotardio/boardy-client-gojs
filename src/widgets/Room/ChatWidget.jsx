@@ -28,11 +28,11 @@ const ChatWidget = ({ messages, onSendMessage}) => {
 				<ListItem key={i}>
 					<Chip
 						label={message.body}
-						color={` ${
+						color={`${
 							message.ownedByCurrentUser ? "primary" : "default"
 						}`}
 					/>
-					{message.body}
+					{/* {message.body} */}
 				</ListItem>
 			))}
 			<ListItem>

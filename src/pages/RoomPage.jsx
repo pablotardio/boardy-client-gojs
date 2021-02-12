@@ -52,10 +52,10 @@ function RoomPage({ setShowChat }) {
 
 	return (
 		<div
-			style={{ backgroundColor: "salmon", height: "1000px" }}
-			onMouseMove={emitMouseActivity}
+			style={{ backgroundColor: "salmon", height: "700px" }}
+			// onMouseMove={emitMouseActivity}
 		>
-			{mousesCoord.map((item, i) => {
+			{/* {mousesCoord.map((item, i) => {
 				return (
 					<div
 						style={{
@@ -73,7 +73,7 @@ function RoomPage({ setShowChat }) {
 				);
 				// return <div key={item.session_id}> aqui ta el mouse {i}  {item.session_id}
 				// coods x: {item.coords.x}  y: {item.coords.y}</div>
-			})}
+			})} */}
 			<Fab
 				onClick={toggleDrawerChat(anchor, true)}
 				color="primary"

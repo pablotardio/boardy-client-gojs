@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
 import MenuLateralWidget from "../widgets/navbar/MenuLateralWidget";
 import ChatWidget from "../widgets/Room/ChatWidget";
+import DiagramContainer from "../widgets/Room/ReactFlowy";
 
 function RoomPage({ setShowChat }) {
 	//    se puede obtener los parametros de un compenente que se linkee sin ninguna prop
@@ -49,12 +50,22 @@ function RoomPage({ setShowChat }) {
 
 		setState({ ...state, [anchor]: open });
 	};
-
+	const styleFAB = {
+		
+		margin: 0,
+		top: 'auto',
+		right: 20,
+		bottom: 20,
+		left: 'auto',
+		position: 'fixed',
+		zIndex:'4'
+	};
 	return (
 		<div
-			style={{ backgroundColor: "salmon", height: "700px" }}
+			style={{ backgroundColor: "salmon", height: "700px", }}
 			// onMouseMove={emitMouseActivity}
 		>
+			<DiagramContainer></DiagramContainer>
 			{/* {mousesCoord.map((item, i) => {
 				return (
 					<div
@@ -74,7 +85,8 @@ function RoomPage({ setShowChat }) {
 				// return <div key={item.session_id}> aqui ta el mouse {i}  {item.session_id}
 				// coods x: {item.coords.x}  y: {item.coords.y}</div>
 			})} */}
-			<Fab
+			<Fab 
+				style={styleFAB}
 				onClick={toggleDrawerChat(anchor, true)}
 				color="primary"
 				aria-label="add"

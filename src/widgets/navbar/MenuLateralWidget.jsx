@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
  * @param anchor the anchor object
  * @param toggleDrawer the function that will show or hide the drawer
  */
-const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
+const MenuLateralWidget = ({ children,menuItems,state, anchor, toggleDrawer }) => {
 	const history=useHistory();
 	
 	const list = (anchor) => {
@@ -29,6 +29,7 @@ const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
 			onKeyDown={toggleDrawer(anchor, false)}
 		>
 			<List>
+				{children}
 				{menuItems?.map((item, index) => (
 					
 					<ListItem button  key={item.id} onClick={	()=>rutear(item)}>
@@ -41,7 +42,7 @@ const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
 				))}
 			</List>
 			<Divider />
-			<List>
+			{/* <List>
 				{["All mail", "Trash", "Spam"].map((text, index) => (
 					<ListItem button key={text}>
 						<ListItemIcon>
@@ -51,7 +52,7 @@ const MenuLateralWidget = ({ menuItems,state, anchor, toggleDrawer }) => {
 						<ListItemText primary={text} />
 					</ListItem>
 				))}
-			</List>
+			</List> */}
 		</div>
 	)};
 

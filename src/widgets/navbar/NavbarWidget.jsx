@@ -6,11 +6,12 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import {Message} from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom"; //Se debe instalar el @types/PAQUETE para reconocer sus jsx props etc
 
 import MenuLateralWidget from "./MenuLateralWidget";
 
-const NavbarWidget = ({ parentStateVistas, updateNav }) => {
+const NavbarWidget = ({ parentStateVistas,isChatActive, updateNav }) => {
 	let history = useHistory();
 	const [state, setState] = React.useState({
 		top: false,
@@ -58,6 +59,7 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 			console.log("Cerrando sesion");
 			localStorage.clear();
 			updateNav();
+	
 		},
 	};
 	/**
@@ -87,12 +89,36 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 			<div key={anchor}>
 				<IconButton
 					onClick={toggleDrawer(anchor, true)}
-					edge="start"
+					edge="end"
 					className={classes.menuButton}
 					color="inherit"
 					aria-label="menu"
 				>
 					<MenuIcon />
+				</IconButton>
+				<MenuLateralWidget
+					menuItems={parentStateVistas}
+					state={state}
+					anchor={anchor}
+					toggleDrawer={toggleDrawer}
+				></MenuLateralWidget>
+			</div>
+		) : (
+			""
+		);
+	};
+	const _retornarBotonChat = () => {
+		const anchor = "right";
+		return (isChatActive ) ? (
+			<div key={anchor}>
+				<IconButton
+					onClick={toggleDrawer(anchor, true)}
+					edge="end"
+					className={classes.menuButton}
+					color="inherit"
+					aria-label="menu"
+				>
+					<Message />
 				</IconButton>
 				<MenuLateralWidget
 					menuItems={parentStateVistas}
@@ -111,11 +137,12 @@ const NavbarWidget = ({ parentStateVistas, updateNav }) => {
 			<AppBar position="static">
 				<Toolbar variant="dense">
 					{_retornarBotonMenu()}
+					
 
 					<Typography variant="h6" className={classes.title}>
 						Boardy Home
 					</Typography>
-
+					{_retornarBotonChat()}
 					{_retornoDeSesion()}
 				</Toolbar>
 			</AppBar>

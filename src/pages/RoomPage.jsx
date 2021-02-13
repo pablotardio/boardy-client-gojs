@@ -61,12 +61,16 @@ function RoomPage({ setShowChat }) {
 		position: 'fixed',
 		zIndex:'4'
 	};
+	const handleModelChange=(changes)=> {
+		console.log(changes);
+		alert("GoJS model changed!");
+	}
 	return (
 		<div
-			style={{ backgroundColor: "salmon", height: "700px", }}
+			style={{ backgroundColor: "#9fe3da", height: "700px", }}
 			// onMouseMove={emitMouseActivity}
 		>
-			<FlowgrammerWidget></FlowgrammerWidget>
+			<FlowgrammerWidget onModelChange={handleModelChange}></FlowgrammerWidget>
 			
 			{/* {mousesCoord.map((item, i) => {
 				return (

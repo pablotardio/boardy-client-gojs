@@ -647,7 +647,7 @@ function handleModelChange(changes) {
 }
 
 // render function...
-function FlowgrammerWidget() {
+function FlowgrammerWidget({onModelChange}) {
 	return (
 		<div>
 			<div id="myFlexDiv">
@@ -713,7 +713,7 @@ function FlowgrammerWidget() {
 					// 	{ from: 12, to: 2 },
 					// 	{ from: 12, to: 13 },
 					// ]}
-					onModelChange={handleModelChange}
+					onModelChange={onModelChange}
 				/>
 				<button onClick={() => console.log(myDiagram.model.toJson())}>
 					{" "}

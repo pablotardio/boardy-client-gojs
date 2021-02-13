@@ -1,0 +1,69 @@
+/* App.css */
+.diagram-component {
+	width: 400px;
+	height: 700px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+/* Use a Flexbox to make the Palette/Overview/Diagram responsive and size things relatively */
+#myFlexDiv {
+	display: flex;
+	width: 100%;
+	height: 600px;
+}
+#myPODiv {
+	display: flex;
+}
+@media (min-width: 768px) {
+	#myFlexDiv {
+		flex-flow: row;
+	}
+	#myPODiv {
+		width: 105px;
+		height: 100%;
+		margin-right: 3px;
+		flex-flow: column;
+	}
+	#myPaletteDiv {
+		height: 80%;
+	}
+	#myOverviewDiv {
+		margin-top: 3px;
+		flex: 1;
+	}
+	#myDiagramDiv {
+		flex: 1;
+	}
+  .myDiagramDiv {
+		width: 90%;
+		flex: 1;
+	}
+}
+@media (max-width: 767px) {
+	#myFlexDiv {
+		flex-flow: column;
+		align-items: center;
+	}
+	#myPODiv {
+		width: 90%;
+		height: 105px;
+		margin-bottom: 3px;
+		flex-flow: row;
+	}
+	#myPaletteDiv {
+		width: 75%;
+	}
+	#myOverviewDiv {
+		margin-left: 3px;
+		flex: 1;
+	}
+	#myDiagramDiv {
+		width: 90%;
+		flex: 1;
+	}
+  .myDiagramDiv {
+		width: 90%;
+		flex: 1;
+	}
+}

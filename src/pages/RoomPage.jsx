@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
 import MenuLateralWidget from "../widgets/navbar/MenuLateralWidget";
 import ChatWidget from "../widgets/Room/ChatWidget";
+import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
 
 function RoomPage({ setShowChat }) {
@@ -65,7 +66,8 @@ function RoomPage({ setShowChat }) {
 			style={{ backgroundColor: "salmon", height: "700px", }}
 			// onMouseMove={emitMouseActivity}
 		>
-			<DiagramContainer></DiagramContainer>
+			<FlowgrammerWidget></FlowgrammerWidget>
+			
 			{/* {mousesCoord.map((item, i) => {
 				return (
 					<div

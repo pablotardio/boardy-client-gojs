@@ -662,12 +662,15 @@ const setDiagramReadOnly = (state) => {
 function handleModelChange(changes) {
 	alert("GoJS model changed!");
 }
-
+function getDiagram(){
+	return myDiagram;
+}
 // render function...
 function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 	useEffect(() => {
 		if (setDiagramController != undefined)
 			setDiagramController({
+				getDiagram,
 				setDiagram,
 				handleModelChange,
 				setDiagramReadOnly,

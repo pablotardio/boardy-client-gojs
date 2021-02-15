@@ -21,15 +21,18 @@ function RoomPage({ setShowChat }) {
 	});
 	const anchor = "right";
 	const { roomId, password } = useParams();
-	const { messages, sendMessage, mousesCoord, emitMouseActivity } = useRoom(
-		roomId,
-		password
-	);
 	const [diagramController, setDiagramController] = useState({
-		setDiagram: () => {},
+		getDiagram:()=>{},
+		setDiagram: (diagram) => {},
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
 	});
+	const { messages, sendMessage, mousesCoord, emitMouseActivity,emitDiagramNodeChanges } = useRoom(
+		roomId,
+		password,
+		diagramController
+	);
+	
 	//Component did mount
 	useEffect(() => {
 		console.log();
@@ -64,10 +67,13 @@ function RoomPage({ setShowChat }) {
 		position: "fixed",
 		zIndex: "4",
 	};
+	
 	const handleModelChange = (changes) => {
 		console.log(changes);
 		alert("GoJS model changed!");
-		
+		const diagram=diagramController.getDiagram()
+		emitDiagramNodeChanges(diagram.model.toJson());
+
 	};
 	const handleClickButtonPermission = () => {
 		const newModel = {

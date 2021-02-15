@@ -496,15 +496,15 @@ function initDiagram() {
 			// add group for conditional
 			groupdata = { isGroup: true, cat: newnode.category };
 			diagram.model.addNodeData(groupdata);
-			 group = diagram.findNodeForData(groupdata);
+			group = diagram.findNodeForData(groupdata);
 			group.containingGroup = oldlink.containingGroup;
 			diagram.select(group);
 
 			newnode.containingGroup = group;
 
-			 enddata = { category: "EndIf" };
+			enddata = { category: "EndIf" };
 			diagram.model.addNodeData(enddata);
-			 endnode = diagram.findNodeForData(enddata);
+			endnode = diagram.findNodeForData(enddata);
 			endnode.containingGroup = group;
 			endnode.location = e.documentPoint;
 
@@ -522,15 +522,15 @@ function initDiagram() {
 		} else if (newnode.category === "Switch") {
 			// add multi-way Switch group
 			// add group for loop
-			 groupdata = { isGroup: true, cat: newnode.category };
+			groupdata = { isGroup: true, cat: newnode.category };
 			diagram.model.addNodeData(groupdata);
-			 group = diagram.findNodeForData(groupdata);
+			group = diagram.findNodeForData(groupdata);
 			group.containingGroup = oldlink.containingGroup;
 			diagram.select(group);
 
 			newnode.containingGroup = group;
 
-			 enddata = { category: "Merge" };
+			enddata = { category: "Merge" };
 			diagram.model.addNodeData(enddata);
 			endnode = diagram.findNodeForData(enddata);
 			endnode.containingGroup = group;
@@ -605,7 +605,7 @@ function initDiagram() {
 	}
 
 	// initialize Palette
-	// const myPalette = 
+	// const myPalette =
 	$(go.Palette, "myPaletteDiv", {
 		maxSelectionCount: 1,
 		nodeTemplateMap: myDiagram.nodeTemplateMap,
@@ -620,15 +620,17 @@ function initDiagram() {
 
 	// initialize Overview
 	// const myOverview =
-	 $(go.Overview, "myOverviewDiv", {
+	$(go.Overview, "myOverviewDiv", {
 		observed: myDiagram,
 		contentAlignment: go.Spot.Center,
 	});
 	load();
 	return myDiagram;
 }
+/**
+ * Makes the flowgram empty with only a begin and end
+ */
 function createNewDiag() {
-
 	myDiagram.model = go.GraphObject.make(go.GraphLinksModel, {
 		linkKeyProperty: "id01", //toFixTheBug
 		nodeDataArray: [
@@ -638,12 +640,21 @@ function createNewDiag() {
 		linkDataArray: [{ from: 1, to: 2 }],
 	});
 }
+/**
+ * the function can change the diagram that is being show for another it has a format and is
+ * obtained from myDiagram.model.toJson()
+ * @param {*} diagramJSON
+ */
 function setDiagram(diagramJSON) {
 	myDiagram.model = go.Model.fromJson(diagramJSON);
 }
-const setDiagramReadOnly=(state)=>{
-	myDiagram.isReadOnly=state;
-}
+/**
+ * This function will make the diagram editable or not (it can be zoomed yet)
+ * @param {boolean} state this can be true or false
+ */
+const setDiagramReadOnly = (state) => {
+	myDiagram.isReadOnly = state;
+};
 /**
  * This function handles any changes to the GoJS model.
  * It is here that you would make any updates to your React state, which is dicussed below.
@@ -653,15 +664,17 @@ function handleModelChange(changes) {
 }
 
 // render function...
-function FlowgrammerWidget({onModelChange,setDiagramController}) {
+function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 	useEffect(() => {
-		 if(setDiagramController!=undefined)
-		setDiagramController({setDiagram,handleModelChange,setDiagramReadOnly})
-		return () => {
-			
-		};
+		if (setDiagramController != undefined)
+			setDiagramController({
+				setDiagram,
+				handleModelChange,
+				setDiagramReadOnly,
+			});
+		return () => {};
 	}, []);
-	
+
 	return (
 		<div>
 			<div id="myFlexDiv">
@@ -682,7 +695,7 @@ function FlowgrammerWidget({onModelChange,setDiagramController}) {
 					></div>
 				</div>
 
-				<ReactDiagram 
+				<ReactDiagram
 					initDiagram={initDiagram}
 					divClassName="diagram-component myDiagramDiv"
 					// { "class": "GraphLinksModel",

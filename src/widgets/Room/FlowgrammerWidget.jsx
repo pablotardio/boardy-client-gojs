@@ -1,5 +1,5 @@
 // App.js
-import React from "react";
+import React, { useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import ParallelLayout from "../../extensions/parallellayout";
@@ -628,6 +628,7 @@ function initDiagram() {
 	return myDiagram;
 }
 function createNewDiag() {
+
 	myDiagram.model = go.GraphObject.make(go.GraphLinksModel, {
 		linkKeyProperty: "id01", //toFixTheBug
 		nodeDataArray: [
@@ -637,7 +638,12 @@ function createNewDiag() {
 		linkDataArray: [{ from: 1, to: 2 }],
 	});
 }
-
+function setDiagram(diagramJSON) {
+	myDiagram.model = go.Model.fromJson(diagramJSON);
+}
+const setDiagramReadOnly=(state)=>{
+	myDiagram.isReadOnly=state;
+}
 /**
  * This function handles any changes to the GoJS model.
  * It is here that you would make any updates to your React state, which is dicussed below.
@@ -647,7 +653,15 @@ function handleModelChange(changes) {
 }
 
 // render function...
-function FlowgrammerWidget({onModelChange}) {
+function FlowgrammerWidget({onModelChange,setDiagramController}) {
+	useEffect(() => {
+		 if(setDiagramController!=undefined)
+		setDiagramController({setDiagram,handleModelChange,setDiagramReadOnly})
+		return () => {
+			
+		};
+	}, []);
+	
 	return (
 		<div>
 			<div id="myFlexDiv">
@@ -668,7 +682,7 @@ function FlowgrammerWidget({onModelChange}) {
 					></div>
 				</div>
 
-				<ReactDiagram
+				<ReactDiagram 
 					initDiagram={initDiagram}
 					divClassName="diagram-component myDiagramDiv"
 					// { "class": "GraphLinksModel",

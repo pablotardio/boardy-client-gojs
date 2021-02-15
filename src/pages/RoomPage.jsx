@@ -25,7 +25,11 @@ function RoomPage({ setShowChat }) {
 		roomId,
 		password
 	);
-
+	const [diagramController, setDiagramController] = useState({
+		setDiagram: () => {},
+		handleModelChange: () => {},
+		setDiagramReadOnly: () => {},
+	});
 	//Component did mount
 	useEffect(() => {
 		console.log();
@@ -52,26 +56,41 @@ function RoomPage({ setShowChat }) {
 		setState({ ...state, [anchor]: open });
 	};
 	const styleFAB = {
-		
 		margin: 0,
-		top: 'auto',
+		top: "auto",
 		right: 20,
 		bottom: 20,
-		left: 'auto',
-		position: 'fixed',
-		zIndex:'4'
+		left: "auto",
+		position: "fixed",
+		zIndex: "4",
 	};
-	const handleModelChange=(changes)=> {
+	const handleModelChange = (changes) => {
 		console.log(changes);
 		alert("GoJS model changed!");
-	}
+		
+	};
+	const handleClickButtonPermission = () => {
+		const newModel = {
+			class: "GraphLinksModel",
+			linkKeyProperty: "id01",
+			nodeDataArray: [
+				{ key: 1, text: "S", category: "Start" },
+				{ key: 2, text: "E", category: "End" },
+			],
+			linkDataArray: [{ from: 1, to: 2, id01: -1 }],
+		};
+		diagramController.setDiagram(newModel);
+	};
 	return (
 		<div
-			style={{ backgroundColor: "#9fe3da", height: "700px", }}
+			style={{ backgroundColor: "#9fe3da", height: "700px" }}
 			// onMouseMove={emitMouseActivity}
 		>
-			<FlowgrammerWidget onModelChange={handleModelChange}></FlowgrammerWidget>
-			
+			<FlowgrammerWidget
+				setDiagramController={setDiagramController}
+				onModelChange={handleModelChange}
+			></FlowgrammerWidget>
+
 			{/* {mousesCoord.map((item, i) => {
 				return (
 					<div
@@ -91,7 +110,7 @@ function RoomPage({ setShowChat }) {
 				// return <div key={item.session_id}> aqui ta el mouse {i}  {item.session_id}
 				// coods x: {item.coords.x}  y: {item.coords.y}</div>
 			})} */}
-			<Fab 
+			<Fab
 				style={styleFAB}
 				onClick={toggleDrawerChat(anchor, true)}
 				color="primary"
@@ -104,8 +123,10 @@ function RoomPage({ setShowChat }) {
 				anchor={anchor}
 				toggleDrawer={toggleDrawerChat}
 			>
-				<ChatWidget messages={messages}
-				onSendMessage={sendMessage}></ChatWidget>
+				<ChatWidget
+					messages={messages}
+					onSendMessage={sendMessage}
+				></ChatWidget>
 			</MenuLateralWidget>
 		</div>
 	);

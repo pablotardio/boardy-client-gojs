@@ -11,9 +11,8 @@ import handleChangeProvider from "../../providers/handleChange.provider";
  *
  * @param {*} formState should contain a form and a setForm function that uses the state
  */
-export default function FormDialogWidget({
-	 form,
-   setForm,
+export default function DialogWidget({
+	
 	handleSubmit,
 	open,
 	title,
@@ -30,31 +29,8 @@ export default function FormDialogWidget({
 				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
 				<DialogContent>
 					<DialogContentText>{description}</DialogContentText>
-					<TextField
-						autoFocus
-						margin="dense"
-						id="codigo"
-						name="codigo"
-						label="Codigo"
-						type="text"
-						value={form.codigo}
-						onChange={(e) =>
-							handleChangeProvider(e, form, setForm)
-						}
-						fullWidth
-					/>
-					<TextField
-						margin="dense"
-						id="password"
-						name="password"
-						label="Contraseña"
-						type="number"
-						value={form.password}
-						onChange={(e) =>
-							handleChangeProvider(e,form, setForm)
-						}
-						fullWidth
-					/>
+				
+					
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">

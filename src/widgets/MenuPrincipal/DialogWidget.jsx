@@ -37,7 +37,7 @@ export default function DialogWidget({
 						Cancel
 					</Button>
 					<Button onClick={handleSubmit} color="primary">
-						Subscribe
+						Continuar
 					</Button>
 				</DialogActions>
 			</Dialog>

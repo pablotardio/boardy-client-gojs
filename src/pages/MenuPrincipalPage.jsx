@@ -17,22 +17,26 @@ const MenuPrincipalPage = () => {
 	const [alert, setAlert] = React.useState({
 		title: "",
 		description: "",
-		handleClickOpen: () => {
-			setOpenAlert(true);
-		},
-		handleClose: () => {
-			setOpenAlert(false);
+		/**operacion para abrir el modal */
+		handleClickClose: () => {
+			closeAllAlerts()
 			setForm({ codigo: "", password: "" });
 		},
 		handleSubmit: async () => {
-			history.push(`/room/${form.codigo}/${form.password}`);
+			setOpenAlert(false);
 		},
 	});
+	const closeAllAlerts=()=>{
+		setOpenJoin(false)
+		setOpenAlert(false);
+		setOpenNew(false);
+	}
 	const newBoard = {
+		/**operacion para abrir el modal */
 		handleClickOpen: () => {
 			setOpenNew(true);
 		},
-		handleClose: () => {
+		handleClickClose: () => {
 			setOpenNew(false);
 			setForm({ codigo: "", password: "" });
 		},
@@ -40,15 +44,36 @@ const MenuPrincipalPage = () => {
 			console.log(form);
 			const json = await RoomProvider.verifyRoom(form);
 			//como tenemos el json debemos establecer que pasara con el modal
+		
+			const {title,newHandleSubmit}=setAlertContent(json)
+
+			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
+			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
 			
+			setForm({ codigo: "", password: "" });
 		},
 	};
-	
+	const setAlertContent=(json)=>{
+		let title='';
+		let newHandleSubmit=()=>{}
+		if(json.status=='bad'){
+			title='No se pudo realizar la creacion de sala :('
+			newHandleSubmit= async ()=>{
+				closeAllAlerts();
+			};
+		}else{
+			title='Todo correcto!'
+			newHandleSubmit= async ()=>{
+				history.push(`/room/${form.codigo}/${form.password}`);
+			};
+		}
+		return{title,newHandleSubmit}
+	}
 	const joinBoard = {
 		handleClickOpen: () => {
 			setOpenJoin(true);
 		},
-		handleClose: () => {
+		handleClickClose: () => {
 			setOpenJoin(false);
 			setForm({ codigo: "", password: "" });
 		},
@@ -62,14 +87,14 @@ const MenuPrincipalPage = () => {
 				form={form}
 				setForm={setForm}
 				open={openNew}
-				handleClose={newBoard.handleClose}
+				handleClose={newBoard.handleClickClose}
 				handleSubmit={newBoard.handleSubmit}
 				title="Nueva Sesion Boardy"
 				description="Necesitamos los siguientes datos para crear una nueva sala de Boardy"
 			></FormDialogWidget>
 			<DialogWidget
 				open={openAlert}
-				handleClose={alert.handleClose}
+				handleClose={alert.handleClickClose}
 				handleSubmit={alert.handleSubmit}
 				title={alert.title}
 				description={alert.description}
@@ -78,7 +103,7 @@ const MenuPrincipalPage = () => {
 				form={form}
 				setForm={setForm}
 				open={openJoin}
-				handleClose={joinBoard.handleClose}
+				handleClose={joinBoard.handleClickClose}
 				handleSubmit={joinBoard.handleSubmit}
 				title="Unirse a Sesion Boardy"
 				description="Necesitamos los siguientes datos para unirse a una sala de Boardy"

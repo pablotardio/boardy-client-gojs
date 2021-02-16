@@ -42,14 +42,13 @@ const MenuPrincipalPage = () => {
 		},
 		handleSubmit: async () => {
 			console.log(form);
-			const json = await RoomProvider.verifyRoom(form);
+			const json = await RoomProvider.verifyRoomCreate(form);
 			//como tenemos el json debemos establecer que pasara con el modal
 		
 			const {title,newHandleSubmit}=setAlertContent(json)
 
 			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
 			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
-			
 			setForm({ codigo: "", password: "" });
 		},
 	};
@@ -57,7 +56,7 @@ const MenuPrincipalPage = () => {
 		let title='';
 		let newHandleSubmit=()=>{}
 		if(json.status=='bad'){
-			title='No se pudo realizar la creacion de sala :('
+			title='Hubo un problema :('
 			newHandleSubmit= async ()=>{
 				closeAllAlerts();
 			};
@@ -77,8 +76,13 @@ const MenuPrincipalPage = () => {
 			setOpenJoin(false);
 			setForm({ codigo: "", password: "" });
 		},
-		handleSubmit: () => {
-			console.log(form);
+		handleSubmit: async() => {
+			
+			const json = await RoomProvider.verifyRoomJoin(form);
+			//como tenemos el json debemos establecer que pasara con el modal
+			const {title,newHandleSubmit}=setAlertContent(json)
+			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
+			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
 		},
 	};
 	return (

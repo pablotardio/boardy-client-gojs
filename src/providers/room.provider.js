@@ -3,7 +3,7 @@ import urlProvider from "./url.provider";
 const url = urlProvider;
 class RoomProvider {
      
-    static async verifyRoom(body) {
+    static async verifyRoomCreate(body) {
         let headers= this.getHeaders();
         
         let config = {
@@ -11,7 +11,20 @@ class RoomProvider {
             headers:headers,
             body: JSON.stringify(body)
         }
-        let res = await fetch(`${url}/room/verifyRoom`, config);
+        let res = await fetch(`${url}/room/verify/create`, config);
+        let json = await res.json();
+        
+        return json
+    }
+    static async verifyRoomJoin(body) {
+        let headers= this.getHeaders();
+        
+        let config = {
+            method: 'POST',
+            headers:headers,
+            body: JSON.stringify(body)
+        }
+        let res = await fetch(`${url}/room/verify/join`, config);
         let json = await res.json();
         
         return json

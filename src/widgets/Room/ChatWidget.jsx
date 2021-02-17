@@ -1,9 +1,17 @@
-import { Chip, Fab, ListItem, TextField } from "@material-ui/core";
+import {
+	Chip,
+	Fab,
+	Grid,
+	ListItem,
+	ListItemText,
+	TextField,
+	Typography,
+} from "@material-ui/core";
 import React, { useState } from "react";
 import SendIcon from "@material-ui/icons/Send";
 import handleChangeProvider from "../../providers/handleChange.provider";
-const ChatWidget = ({ messages, onSendMessage}) => {
-	const [form, setForm] = useState({message:''});
+const ChatWidget = ({ messages, onSendMessage }) => {
+	const [form, setForm] = useState({ message: "" });
 	/**
 	 * return a message in case there is no messagees in the chat
 	 */
@@ -18,22 +26,47 @@ const ChatWidget = ({ messages, onSendMessage}) => {
 	 * Function that will send the message to the state of the parent with the message
 	 */
 	const handleSendMessage = () => {
-		onSendMessage(form.message)
+		onSendMessage(form.message);
+	};
+	const retornarAutor = (i,messages,message) => {
+		return messages[i - 1]?.userData.nombre !== message.userData.nombre ? (
+			<Typography
+				variant="caption"
+				// display="block"
+				gutterBottom
+			>
+				{"De:" + message.userData.nombre}
+			</Typography>
+		) : (
+			""
+		);
 	};
 	return (
 		<div>
 			<ListItem>Chat</ListItem>
 			<ListItem>{_retornarRelleno()}</ListItem>
 			{messages.map((message, i) => (
-				<ListItem key={i}>
-					<Chip
-						label={message.body}
-						color={`${
-							message.ownedByCurrentUser ? "primary" : "default"
-						}`}
-					/>
-					{/* {message.body} */}
-				</ListItem>
+				<div>
+					<ListItem
+						// divider
+						key={i}
+					>
+						<Grid container>
+							<Grid item xs={12} xl={12}>
+								{/* Se verifica que no se repitio el usuario enviador del mensaje */}
+								{retornarAutor(i,messages,message)}
+							</Grid>
+							<Chip
+								label={message.body}
+								color={`${
+									message.ownedByCurrentUser ? "primary" : "default"
+								}`}
+							/>
+
+							{/* {message.body} */}
+						</Grid>
+					</ListItem>
+				</div>
 			))}
 			<ListItem>
 				<TextField
@@ -41,8 +74,8 @@ const ChatWidget = ({ messages, onSendMessage}) => {
 					label="Escribe un mensaje..."
 					variant="filled"
 					value={form.message}
-					name='message'
-					onChange={(e)=>handleChangeProvider(e,form,setForm)}
+					name="message"
+					onChange={(e) => handleChangeProvider(e, form, setForm)}
 				/>
 				<Fab onClick={handleSendMessage} color="primary" aria-label="add">
 					<SendIcon />

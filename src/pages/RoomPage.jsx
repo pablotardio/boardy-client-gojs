@@ -1,5 +1,5 @@
 import { Chip, Fab, ListItem } from "@material-ui/core";
-import { Message } from "@material-ui/icons";
+import { Message,Person } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
@@ -30,7 +30,8 @@ function RoomPage({ setShowChat }) {
 	const { messages, sendMessage, mousesCoord, emitMouseActivity,emitDiagramNodeChanges } = useRoom(
 		roomId,
 		password,
-		diagramController
+		diagramController,
+		localStorage.getItem('userData')
 	);
 	
 	//Component did mount
@@ -61,10 +62,10 @@ function RoomPage({ setShowChat }) {
 	const styleFAB = {
 		margin: 0,
 		top: "auto",
-		right: 20,
-		bottom: 20,
+		// right: 20,
+		// bottom: 20,
 		left: "auto",
-		position: "fixed",
+		position: "blocked",
 		zIndex: "4",
 	};
 	
@@ -124,6 +125,15 @@ function RoomPage({ setShowChat }) {
 			>
 				<Message />
 			</Fab>
+			<Fab
+				style={styleFAB}
+				onClick={toggleDrawerChat(anchor, true)}
+				color="primary"
+				aria-label="add"
+			>
+				<Person />
+			</Fab>
+			
 			<MenuLateralWidget
 				state={state}
 				anchor={anchor}

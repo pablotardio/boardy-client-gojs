@@ -5,7 +5,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const SOCKET_SERVER_URL = "http://localhost:3002";
 
-const useRoom = (roomId, roomPass, diagramController) => {
+const useRoom = (roomId, roomPass, diagramController,userData) => {
 	const [messages, setMessages] = useState([]); // Sent and received messages
 	const [mousesCoord, setMousesCoord] = useState([]); //sent mouse movement
 
@@ -16,13 +16,14 @@ const useRoom = (roomId, roomPass, diagramController) => {
 		// Creates a WebSocket connection
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
 			transports: ["websocket"],
-			query: { roomId, roomPass },
+			query: { roomId, roomPass,userData },
 		});
 
 		// Listens for incoming messages
 		socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
 			const incomingMessage = {
 				...message,
+				
 				ownedByCurrentUser: message.senderId === socketRef.current.id,
 			};
 			setMessages((messages) => [...messages, incomingMessage]);

@@ -71,6 +71,7 @@ const  LoginPage = ({updateNav}) => {
     if(json.token){
       localStorage.setItem('token',JSON.stringify(json.token));
       localStorage.setItem('vistas',JSON.stringify(json.vistas));
+	  localStorage.setItem('userData',JSON.stringify(json.userData));
     }
    
     updateNav();

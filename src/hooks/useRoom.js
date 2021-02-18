@@ -62,8 +62,8 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	 */
 	const listenJoinLeave=()=>{
 		socketRef.current.on(GUEST_JOIN_LEAVE, (data) => {
-			console.log('se unio-retiro alguien');
-			console.log(data);
+			// console.log('se unio-retiro alguien');
+			// console.log(data);
 			setSwitchList(data.guests)
 		});
 	}

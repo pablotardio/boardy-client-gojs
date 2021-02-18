@@ -4,12 +4,13 @@ import useSwitchPermission from "./useSwitchPermission";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
+const CHANGED_PERMISSION = "changedPermission"; // event for changing permissions
 const SOCKET_SERVER_URL = "http://localhost:3002";
 
 const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const [messages, setMessages] = useState([]); // Sent and received messages
 	const [mousesCoord, setMousesCoord] = useState([]); //sent mouse movement
-	const {switchList, setSwitchList, toggleSwitch} = useSwitchPermission();
+	const { switchList, setSwitchList, toggleSwitch } = useSwitchPermission();
 
 	const socketRef = useRef();
 
@@ -27,8 +28,8 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 		//Listen for diagram Changes
 		listenDiagramNodeChange();
 
-		
-		listenJoinLeave(); 
+		listenJoinLeave();
+		listenToggleSwitch();
 		// listenUserPermissions();
 		// Destroys the socket reference
 		// when the connection is closed
@@ -60,13 +61,13 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	/**
 	 * if a participants join to the room, the socket should emit this and we capture it
 	 */
-	const listenJoinLeave=()=>{
+	const listenJoinLeave = () => {
 		socketRef.current.on(GUEST_JOIN_LEAVE, (data) => {
 			// console.log('se unio-retiro alguien');
 			// console.log(data);
-			setSwitchList(data.guests)
+			setSwitchList(data.guests);
 		});
-	}
+	};
 	const listenDiagramNodeChange = () => {
 		socketRef.current.on(DIAGRAM_NODES_CHANGE_EVENT, (data) => {
 			console.log("escuchado el cambio");
@@ -90,7 +91,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 			}
 		});
 	};
-	const listenMessages=()=>{
+	const listenMessages = () => {
 		socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
 			const incomingMessage = {
 				...message,
@@ -99,14 +100,24 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 			};
 			setMessages((messages) => [...messages, incomingMessage]);
 		});
-	}
+	};
+	const listenToggleSwitch = () => {
+		socketRef.current.on(CHANGED_PERMISSION, (data) => {
+			//data should be a boolean containing the new permission value
+			diagramController.setDiagramReadOnly(data.value);
+		});
+	};
+	const toggleSwitchSocket = (socketId,r,w) => {
+		//emitimos el cambio para cambiar la lista y decirle a un usuarios que ya tiene permisos
+		toggleSwitch(socketId,r,w);
+	};
 	return {
 		emitDiagramNodeChanges,
 		messages,
 		sendMessage,
 		mousesCoord,
 		emitMouseActivity,
-		switchData:{switchList,setSwitchList,toggleSwitch}
+		switchData: { switchList, setSwitchList, toggleSwitchSocket },
 	};
 };
 

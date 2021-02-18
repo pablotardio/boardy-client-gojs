@@ -11,7 +11,10 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 const PermissionListWidget = ({ userList, onTogglePermission }) => {
-
+const handleChange=(e,user)=>{
+	console.log(user);
+	onTogglePermission(user.socketId,true,e.target.checked)
+}
 
 	return (
 		<div>
@@ -21,29 +24,19 @@ const PermissionListWidget = ({ userList, onTogglePermission }) => {
 				<div>
 					<ListItem
 						// divider
-						key={i}
+						key={'listPart'+i}
 					>
 						<Grid container>
 							<Grid item xs={12} xl={12}>
 								{/* Se verifica que no se repitio el usuario enviador del mensaje */}
 								{user.nombre}
 
-								<FormControlLabel
+								
+                                <FormControlLabel style={{marginInlineStart:'1vh'}}
 									control={
 										<Switch
-											// checked={state.checkedB}
-											// onChange={handleChange}
-											name="checkedB"
-											color="primary"
-										/>
-									}
-									label="Primary"
-								/>
-                                <FormControlLabel
-									control={
-										<Switch
-											// checked={state.checkedB}
-											// onChange={handleChange}
+											 checked={user.permissions.w}
+											onChange={(e)=>handleChange(e,user)}
 											name="checkedB"
 											color="primary"
 										/>

@@ -163,7 +163,7 @@ function RoomPage({ setShowChat }) {
 			>
 				<PermissionListWidget
 					userList={switchData.switchList}
-					onTogglePermission={switchData.toggleSwitch}
+					onTogglePermission={switchData.toggleSwitchSocket}
 				></PermissionListWidget>
 			</MenuLateralWidget>
 		</div>

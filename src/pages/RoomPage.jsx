@@ -6,6 +6,7 @@ import useRoom from "../hooks/useRoom";
 import MenuLateralWidget from "../widgets/navbar/MenuLateralWidget";
 import ChatWidget from "../widgets/Room/ChatWidget";
 import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
+import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
 
 function RoomPage({ setShowChat }) {
@@ -16,6 +17,7 @@ function RoomPage({ setShowChat }) {
 	const [state, setState] = useState({
 		top: false,
 		left: false,
+		permissionRight:false,
 		bottom: false,
 		right: false,
 	});
@@ -27,7 +29,7 @@ function RoomPage({ setShowChat }) {
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
 	});
-	const { messages, sendMessage, mousesCoord, emitMouseActivity,emitDiagramNodeChanges } = useRoom(
+	const {switchData, messages, sendMessage, mousesCoord, emitMouseActivity,emitDiagramNodeChanges } = useRoom(
 		roomId,
 		password,
 		diagramController,
@@ -50,6 +52,16 @@ function RoomPage({ setShowChat }) {
 	 * @param {*} open
 	 */
 	const toggleDrawerChat = (anchor, open) => (event) => {
+		if (
+			event.type === "keydown" &&
+			(event.key === "Tab" || event.key === "Shift")
+		) {
+			return;
+		}
+
+		setState({ ...state, [anchor]: open });
+	};
+	const toggleDrawerPermission = (anchor, open) => (event) => {
 		if (
 			event.type === "keydown" &&
 			(event.key === "Tab" || event.key === "Shift")
@@ -143,6 +155,16 @@ function RoomPage({ setShowChat }) {
 					messages={messages}
 					onSendMessage={sendMessage}
 				></ChatWidget>
+			</MenuLateralWidget>
+			<MenuLateralWidget
+				state={state}
+				anchor={anchor}
+				toggleDrawer={toggleDrawerPermission}
+			>
+				<PermissionListWidget
+					userList={switchData.switchList}
+					onTogglePermission={switchData.toggleSwitch}
+				></PermissionListWidget>
 			</MenuLateralWidget>
 		</div>
 	);

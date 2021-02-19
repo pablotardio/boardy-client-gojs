@@ -4,7 +4,8 @@ import useSwitchPermission from "./useSwitchPermission";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
-const CHANGED_PERMISSION = "changedPermission"; // event for changing permissions
+const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing permissions
+const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
 const SOCKET_SERVER_URL = "http://localhost:3002";
 
 const useRoom = (roomId, roomPass, diagramController, userData) => {
@@ -104,11 +105,14 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const listenToggleSwitch = () => {
 		socketRef.current.on(CHANGED_PERMISSION, (data) => {
 			//data should be a boolean containing the new permission value
-			diagramController.setDiagramReadOnly(data.value);
+			diagramController.setDiagramReadOnly(data.readOnly);
 		});
 	};
+	
 	const toggleSwitchSocket = (socketId,r,w) => {
 		//emitimos el cambio para cambiar la lista y decirle a un usuarios que ya tiene permisos
+		socketRef.current.emit(CHANGE_A_PERMISSION,{socketId,r,w});
+		//cambiamos visualmente el switch
 		toggleSwitch(socketId,r,w);
 	};
 	return {

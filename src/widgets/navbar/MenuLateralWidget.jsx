@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
  * @param anchor the anchor object
  * @param toggleDrawer the function that will show or hide the drawer
  */
-const MenuLateralWidget = ({ children,menuItems,state, anchor, toggleDrawer }) => {
+const MenuLateralWidget = ({ children,menuItems,state,stateIndex, anchor, toggleDrawer }) => {
 	const history=useHistory();
 	
 	const list = (anchor) => {
@@ -61,8 +61,8 @@ const MenuLateralWidget = ({ children,menuItems,state, anchor, toggleDrawer }) =
 			<Drawer variant="temporary" 
 				
 				anchor={anchor}
-				open={state[anchor]}
-				onClose={toggleDrawer(anchor, false)}
+				open={state[stateIndex]}
+				onClose={toggleDrawer(stateIndex, false)}
 			>
 				{list(anchor)}
 			</Drawer>

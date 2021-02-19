@@ -1,5 +1,5 @@
 import { Chip, Fab, ListItem } from "@material-ui/core";
-import { Message,Person } from "@material-ui/icons";
+import { Message, Person } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
@@ -17,25 +17,32 @@ function RoomPage({ setShowChat }) {
 	const [state, setState] = useState({
 		top: false,
 		left: false,
-		permissionRight:false,
+		permissionRight: false,
 		bottom: false,
 		right: false,
 	});
 	const anchor = "right";
 	const { roomId, password } = useParams();
 	const [diagramController, setDiagramController] = useState({
-		getDiagram:()=>{},
+		getDiagram: () => {},
 		setDiagram: (diagram) => {},
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
 	});
-	const {switchData, messages, sendMessage, mousesCoord, emitMouseActivity,emitDiagramNodeChanges } = useRoom(
+	const {
+		switchData,
+		messages,
+		sendMessage,
+		mousesCoord,
+		emitMouseActivity,
+		emitDiagramNodeChanges,
+	} = useRoom(
 		roomId,
 		password,
 		diagramController,
-		localStorage.getItem('userData')
+		localStorage.getItem("userData")
 	);
-	
+
 	//Component did mount
 	useEffect(() => {
 		console.log();
@@ -51,7 +58,7 @@ function RoomPage({ setShowChat }) {
 	 * @param {*} anchor
 	 * @param {*} open
 	 */
-	const toggleDrawerChat = (anchor, open) => (event) => {
+	const toggleDrawer = (stateIndex, open) => (event) => {
 		if (
 			event.type === "keydown" &&
 			(event.key === "Tab" || event.key === "Shift")
@@ -59,18 +66,9 @@ function RoomPage({ setShowChat }) {
 			return;
 		}
 
-		setState({ ...state, [anchor]: open });
+		setState({ ...state, [stateIndex]: open });
 	};
-	const toggleDrawerPermission = (anchor, open) => (event) => {
-		if (
-			event.type === "keydown" &&
-			(event.key === "Tab" || event.key === "Shift")
-		) {
-			return;
-		}
-
-		setState({ ...state, [anchor]: open });
-	};
+	
 	const styleFAB = {
 		margin: 0,
 		top: "auto",
@@ -80,13 +78,12 @@ function RoomPage({ setShowChat }) {
 		position: "blocked",
 		zIndex: "4",
 	};
-	
+
 	const handleModelChange = (changes) => {
 		console.log(changes);
 		alert("GoJS model changed!");
-		const diagram=diagramController.getDiagram()
+		const diagram = diagramController.getDiagram();
 		emitDiagramNodeChanges(diagram.model.toJson());
-
 	};
 	const handleClickButtonPermission = () => {
 		const newModel = {
@@ -131,7 +128,7 @@ function RoomPage({ setShowChat }) {
 			})} */}
 			<Fab
 				style={styleFAB}
-				onClick={toggleDrawerChat(anchor, true)}
+				onClick={toggleDrawer(anchor, true)}
 				color="primary"
 				aria-label="add"
 			>
@@ -139,18 +136,20 @@ function RoomPage({ setShowChat }) {
 			</Fab>
 			<Fab
 				style={styleFAB}
-				onClick={toggleDrawerChat(anchor, true)}
+				onClick={toggleDrawer('permissionRight', true)}
 				color="primary"
 				aria-label="add"
 			>
 				<Person />
 			</Fab>
-			
+
 			<MenuLateralWidget
 				state={state}
 				anchor={anchor}
-				toggleDrawer={toggleDrawerChat}
+				toggleDrawer={toggleDrawer}
+				stateIndex={'right'}
 			>
+				
 				<ChatWidget
 					messages={messages}
 					onSendMessage={sendMessage}
@@ -159,7 +158,8 @@ function RoomPage({ setShowChat }) {
 			<MenuLateralWidget
 				state={state}
 				anchor={anchor}
-				toggleDrawer={toggleDrawerPermission}
+				stateIndex={"permissionRight"}
+				toggleDrawer={toggleDrawer}
 			>
 				<PermissionListWidget
 					userList={switchData.switchList}

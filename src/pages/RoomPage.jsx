@@ -10,6 +10,15 @@ import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
 
 function RoomPage({ setShowChat }) {
+	const styleFAB = {
+		margin: 0,
+		top: "auto",
+		// right: 20,
+		// bottom: 20,
+		left: "auto",
+		position: "blocked",
+		zIndex: "4",
+	};
 	//    se puede obtener los parametros de un compenente que se linkee sin ninguna prop
 	//    const { roomId, password } = props.match.params;
 	// se puede hacer con mas de una prop
@@ -43,16 +52,7 @@ function RoomPage({ setShowChat }) {
 		localStorage.getItem("userData")
 	);
 
-	//Component did mount
-	useEffect(() => {
-		console.log();
-		setShowChat(true);
-		// toggleDrawerChat
-		//Component wil unmount
-		return () => {
-			setShowChat(false);
-		};
-	}, []);
+
 	/**
 	 * Funcion para mostrar el drawer que se le envia al nav
 	 * @param {*} anchor
@@ -69,15 +69,7 @@ function RoomPage({ setShowChat }) {
 		setState({ ...state, [stateIndex]: open });
 	};
 	
-	const styleFAB = {
-		margin: 0,
-		top: "auto",
-		// right: 20,
-		// bottom: 20,
-		left: "auto",
-		position: "blocked",
-		zIndex: "4",
-	};
+
 
 	const handleModelChange = (changes) => {
 		console.log(changes);

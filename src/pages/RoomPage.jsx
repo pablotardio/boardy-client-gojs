@@ -9,7 +9,7 @@ import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
 import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
 
-function RoomPage({ setShowChat }) {
+function RoomPage() {
 	const styleFAB = {
 		margin: 0,
 		top: "auto",

@@ -31,7 +31,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 
 		listenJoinLeave();
 		listenToggleSwitch();
-		// listenUserPermissions();
+		
 		// Destroys the socket reference
 		// when the connection is closed
 		return () => {

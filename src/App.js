@@ -37,7 +37,7 @@ function App() {
 						exact
 						path="/room/:roomId/:password"
 						component={()  => (
-							<RoomPage  setShowChat={setShowChat}></RoomPage>
+							<RoomPage  ></RoomPage>
 						)}
 					/>
 					{/* <Route component={Menu} /> */}

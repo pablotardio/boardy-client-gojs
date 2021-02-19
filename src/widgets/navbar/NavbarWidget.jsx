@@ -99,6 +99,7 @@ const NavbarWidget = ({ parentStateVistas, isChatActive, updateNav }) => {
 				<MenuLateralWidget
 					menuItems={parentStateVistas}
 					state={state}
+					stateIndex={anchor}
 					anchor={anchor}
 					toggleDrawer={toggleDrawer}
 				></MenuLateralWidget>

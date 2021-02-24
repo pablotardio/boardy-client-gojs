@@ -1,5 +1,5 @@
 import { Grid, Button } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import AirplayIcon from "@material-ui/icons/Airplay";
 import AddToQueueIcon from "@material-ui/icons/AddToQueue";
 
@@ -7,13 +7,17 @@ import FormDialogWidget from "../widgets/MenuPrincipal/FormDialogWidget";
 import DialogWidget from "../widgets/MenuPrincipal/DialogWidget";
 import { useHistory } from "react-router-dom";
 import RoomProvider from "../providers/room.provider";
+const TIPO_PARTICIPANTE="tipoParticipante";
 const MenuPrincipalPage = () => {
 	const [openNew, setOpenNew] = React.useState(false);
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [openJoin, setOpenJoin] = React.useState(false);
 	const [form, setForm] = React.useState({ codigo: "", password: "" });
 	const history = useHistory();
-
+	useEffect(() => {
+		sessionStorage.setItem(TIPO_PARTICIPANTE,'')
+		
+	}, []);
 	const [alert, setAlert] = React.useState({
 		title: "",
 		description: "",
@@ -50,6 +54,26 @@ const MenuPrincipalPage = () => {
 			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
 			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
 			setForm({ codigo: "", password: "" });
+			sessionStorage.setItem(TIPO_PARTICIPANTE,'host') //ponemos la session variable para mostrar el respectivo menu
+		},
+	};
+	const joinBoard = {
+		handleClickOpen: () => {
+			setOpenJoin(true);
+		},
+		handleClickClose: () => {
+			setOpenJoin(false);
+			setForm({ codigo: "", password: "" });
+		},
+		handleSubmit: async() => {
+			
+			const json = await RoomProvider.verifyRoomJoin(form);
+			//como tenemos el json debemos establecer que pasara con el modal
+			
+			const {title,newHandleSubmit}=setAlertContent(json)
+			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
+			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
+			sessionStorage.setItem(TIPO_PARTICIPANTE,'guest') //ponemos la session variable para mostrar el respectivo menu
 		},
 	};
 	const setAlertContent=(json)=>{
@@ -63,28 +87,13 @@ const MenuPrincipalPage = () => {
 		}else{
 			title='Todo correcto!'
 			newHandleSubmit= async ()=>{
+				
 				history.push(`/room/${form.codigo}/${form.password}`);
 			};
 		}
 		return{title,newHandleSubmit}
 	}
-	const joinBoard = {
-		handleClickOpen: () => {
-			setOpenJoin(true);
-		},
-		handleClickClose: () => {
-			setOpenJoin(false);
-			setForm({ codigo: "", password: "" });
-		},
-		handleSubmit: async() => {
-			
-			const json = await RoomProvider.verifyRoomJoin(form);
-			//como tenemos el json debemos establecer que pasara con el modal
-			const {title,newHandleSubmit}=setAlertContent(json)
-			setAlert({...alert,title,description:json.msg,handleSubmit:newHandleSubmit})
-			setOpenAlert(true); //abrimos el modal para mostrar el mensaje respectivo
-		},
-	};
+	
 	return (
 		<div>
 			<FormDialogWidget

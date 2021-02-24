@@ -4,6 +4,8 @@ import React from "react";
 const HomePage = () => {
 	let text =
 		"Boardy es el sitio ideal para la creacion de Diagramas de flujo en tiempo real ";
+	// When the home is accesed it should destroy the tipoParticipante from session storage
+
 	return (
 		<div style={{paddingTop:'2%'}}>
 			<Grid container justify="center" >

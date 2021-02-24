@@ -18,7 +18,7 @@ const handleChange=(e,user)=>{
 
 	return (
 		<div>
-			<ListItem>Lista de participantes</ListItem>
+			<ListItem key={'listPart'+'title'}>Lista de participantes</ListItem>
 			
 			{userList.map((user, i) => (
 				<div>
@@ -29,13 +29,13 @@ const handleChange=(e,user)=>{
 						<Grid container>
 							<Grid item xs={12} xl={12}>
 								{/* Se verifica que no se repitio el usuario enviador del mensaje */}
-								{user.nombre}
+								{user.usuario?.nombre}
 
 								
-                                <FormControlLabel style={{marginInlineStart:'1vh'}}
+                                <FormControlLabel key={"label"+i} style={{marginInlineStart:'1vh'}}
 									control={
-										<Switch
-											 checked={user.permissions.w}
+										<Switch key={"switch"+i}
+											 checked={user.acceso.escritura}
 											onChange={(e)=>handleChange(e,user)}
 											name="checkedB"
 											color="primary"

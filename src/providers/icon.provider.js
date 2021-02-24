@@ -1,7 +1,7 @@
 import { Home, FeaturedPlayListOutlined } from "@material-ui/icons/";
 const iconList = {
-	home: <Home/>,
-	board: <FeaturedPlayListOutlined/>,
+	
+	board: <FeaturedPlayListOutlined/>,home: <Home/>,
 };
 const getIcon = (iconName) => {
     // console.log(iconName);

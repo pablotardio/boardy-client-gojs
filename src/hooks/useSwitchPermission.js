@@ -17,7 +17,7 @@ const useSwitchPermission=()=>{
         //El slice me separa el arreglo de un indice especifico
         let changedUserPermission=switchList.slice(i, i+1);
         //establezco los nuevos permisos
-        changedUserPermission[0].permissions={r,w};
+        changedUserPermission[0].acceso={lectura:r,escritura:w};
         //concateno el arreglo con sus valores anteriores 
         const auxList = [
             ...switchList.slice(0, i),

@@ -64,8 +64,8 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	 */
 	const listenJoinLeave = () => {
 		socketRef.current.on(GUEST_JOIN_LEAVE, (data) => {
-			// console.log('se unio-retiro alguien');
-			// console.log(data);
+			console.log('se unio-retiro alguien');
+			console.log(data);
 			setSwitchList(data.guests);
 		});
 	};
@@ -104,6 +104,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	};
 	const listenToggleSwitch = () => {
 		socketRef.current.on(CHANGED_PERMISSION, (data) => {
+			console.log('list of permissions',data);
 			//data should be a boolean containing the new permission value
 			diagramController.setDiagramReadOnly(data.readOnly);
 		});

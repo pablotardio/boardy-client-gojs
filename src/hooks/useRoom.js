@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import useSwitchPermission from "./useSwitchPermission";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
@@ -7,12 +8,12 @@ const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
 const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing permissions
 const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
 const SOCKET_SERVER_URL = "http://localhost:3002";
-
+const CLOSED_ROOM = "closedRoom";
 const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const [messages, setMessages] = useState([]); // Sent and received messages
 	const [mousesCoord, setMousesCoord] = useState([]); //sent mouse movement
 	const { switchList, setSwitchList, toggleSwitch } = useSwitchPermission();
-
+	const history = useHistory();
 	const socketRef = useRef();
 
 	useEffect(() => {
@@ -31,7 +32,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 
 		listenJoinLeave();
 		listenToggleSwitch();
-		
+		listenClosedRoom()
 		// Destroys the socket reference
 		// when the connection is closed
 		return () => {
@@ -67,6 +68,15 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 			console.log('se unio-retiro alguien');
 			console.log(data);
 			setSwitchList(data.guests);
+		});
+	};
+	/**
+	 * if a participants join to the room, the socket should emit this and we capture it
+	 */
+	const listenClosedRoom = () => {
+		socketRef.current.on(CLOSED_ROOM, (data) => {
+			console.log('se cerro la sala');
+			history.goBack();
 		});
 	};
 	const listenDiagramNodeChange = () => {

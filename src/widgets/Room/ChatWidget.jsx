@@ -43,20 +43,20 @@ const ChatWidget = ({ messages, onSendMessage }) => {
 	};
 	return (
 		<div>
-			<ListItem>Chat</ListItem>
-			<ListItem>{_retornarRelleno()}</ListItem>
+			<ListItem key={"idChat"}>Chat</ListItem>
+			<ListItem key={"idChatVacio"}>{_retornarRelleno()}</ListItem>
 			{messages.map((message, i) => (
 				<div>
-					<ListItem
+					<ListItem 
 						// divider
-						key={i}
+						key={"divider"+i}
 					>
 						<Grid container>
 							<Grid item xs={12} xl={12}>
 								{/* Se verifica que no se repitio el usuario enviador del mensaje */}
 								{retornarAutor(i,messages,message)}
 							</Grid>
-							<Chip
+							<Chip key={"mensaje"+i}
 								label={message.body}
 								color={`${
 									message.ownedByCurrentUser ? "primary" : "default"

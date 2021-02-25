@@ -24,7 +24,7 @@ class RoomProvider {
             headers:headers,
             body: JSON.stringify(body)
         }
-        let res = await fetch(`${url}/room/verifysave`, config);
+        let res = await fetch(`${url}/room/create`, config);
         let json = await res.json();
         
         return json

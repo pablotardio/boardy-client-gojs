@@ -1,4 +1,4 @@
-const urlProvider="http://localhost:3002/api"
+const urlProvider="http://192.168.1.2:3002/api"
 
 //const urlProvider="https://myeventphoto-server.herokuapp.com/api"
 export default urlProvider

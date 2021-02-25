@@ -1,9 +1,9 @@
 import urlProvider from "./url.provider";
 
 const url = urlProvider;
-class RoomProvider {
+class TemporalRoomProvider {
      
-    static async verifySave(body) {
+    static async verifyRoomCreate(body) {
         let headers= this.getHeaders();
         
         let config = {
@@ -11,12 +11,12 @@ class RoomProvider {
             headers:headers,
             body: JSON.stringify(body)
         }
-        let res = await fetch(`${url}/room/verifysave`, config);
+        let res = await fetch(`${url}/room/verify/create`, config);
         let json = await res.json();
         
         return json
     }
-    static async create(body) {
+    static async verifyRoomJoin(body) {
         let headers= this.getHeaders();
         
         let config = {
@@ -24,21 +24,9 @@ class RoomProvider {
             headers:headers,
             body: JSON.stringify(body)
         }
-        let res = await fetch(`${url}/room/verifysave`, config);
+        let res = await fetch(`${url}/room/verify/join`, config);
         let json = await res.json();
         
-        return json
-    }
-    static async update(body,codigo) {
-        let headers= this.getHeaders();
-        
-        let config = {
-            method: 'PUT',
-            headers:headers,
-            body: JSON.stringify(body)
-        }
-        let res = await fetch(`${url}/room/update/${codigo}`, config);
-        let json = await res.json();
         return json
     }
     static getHeaders=()=>{
@@ -50,4 +38,4 @@ class RoomProvider {
     }
 }
 
-export default RoomProvider
+export default TemporalRoomProvider

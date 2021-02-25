@@ -1,5 +1,5 @@
 import { Chip, Fab, ListItem } from "@material-ui/core";
-import { Message, Person } from "@material-ui/icons";
+import { Message, Person, SaveAltRounded, SaveRounded } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
@@ -133,6 +133,14 @@ function RoomPage() {
 				aria-label="add"
 			>
 				<Person />
+			</Fab>
+			<Fab
+				style={styleFAB}
+				onClick={toggleDrawer('permissionRight', true)}
+				color="primary"
+				aria-label="add"
+			>
+				<SaveRounded />
 			</Fab>
 
 			<MenuLateralWidget

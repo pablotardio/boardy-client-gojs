@@ -6,7 +6,7 @@ import AddToQueueIcon from "@material-ui/icons/AddToQueue";
 import FormDialogWidget from "../widgets/MenuPrincipal/FormDialogWidget";
 import DialogWidget from "../widgets/MenuPrincipal/DialogWidget";
 import { useHistory } from "react-router-dom";
-import RoomProvider from "../providers/room.provider";
+import TemporalRoomProvider from "../providers/temporalroom.provider";
 const TIPO_PARTICIPANTE="tipoParticipante";
 const MenuPrincipalPage = () => {
 	const [openNew, setOpenNew] = React.useState(false);
@@ -46,7 +46,7 @@ const MenuPrincipalPage = () => {
 		},
 		handleSubmit: async () => {
 			console.log(form);
-			const json = await RoomProvider.verifyRoomCreate(form);
+			const json = await TemporalRoomProvider.verifyRoomCreate(form);
 			//como tenemos el json debemos establecer que pasara con el modal
 		
 			const {title,newHandleSubmit}=setAlertContent(json)
@@ -67,7 +67,7 @@ const MenuPrincipalPage = () => {
 		},
 		handleSubmit: async() => {
 			
-			const json = await RoomProvider.verifyRoomJoin(form);
+			const json = await TemporalRoomProvider.verifyRoomJoin(form);
 			//como tenemos el json debemos establecer que pasara con el modal
 			
 			const {title,newHandleSubmit}=setAlertContent(json)

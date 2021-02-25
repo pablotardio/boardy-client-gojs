@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
 import MenuPrincipalPage from "./pages/MenuPrincipalPage";
 import RoomPage from "./pages/RoomPage";
+import SavedRoomsPage from "./pages/SavedRoomsPage";
 function App() {
 	const vistasLocal = localStorage.getItem("vistas");
 	const [vistas, setvistas] = useState(
@@ -27,6 +28,8 @@ function App() {
 					{/* <Route path="/demo1" component={DemoOne} /> */}
 					<Route path="/home" component={HomePage} />
 					<Route path="/mainMenu" component={MenuPrincipalPage} />
+					<Route path="/misPizarras" component={SavedRoomsPage} />
+					
 					<Route
 						path="/login"
 						component={() => (

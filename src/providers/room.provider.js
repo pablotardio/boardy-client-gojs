@@ -41,6 +41,18 @@ class RoomProvider {
         let json = await res.json();
         return json
     }
+    static async getAllOfUser (body){
+        let headers= this.getHeaders();
+        
+        let config = {
+            method: 'GET',
+            headers:headers,
+            body: JSON.stringify(body)
+        }
+        let res = await fetch(`${url}/room/all/user`, config);
+        let json = await res.json();
+        return json
+    }
     static getHeaders=()=>{
         return {
             'Accept': 'application/json',
@@ -48,6 +60,7 @@ class RoomProvider {
             'Authorization': 'Bearer '+localStorage.getItem('token')
         }
     }
+   
 }
 
 export default RoomProvider

@@ -69,7 +69,7 @@ const  LoginPage = ({updateNav}) => {
 		const json = await AuthProvider.login(form);
 	
     if(json.token){
-      localStorage.setItem('token',JSON.stringify(json.token));
+      localStorage.setItem('token',json.token);
       localStorage.setItem('vistas',JSON.stringify(json.vistas));
 	  localStorage.setItem('userData',JSON.stringify(json.userData));
     }

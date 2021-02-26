@@ -41,6 +41,17 @@ class RoomProvider {
         let json = await res.json();
         return json
     }
+    static async delete(codigo) {
+        let headers= this.getHeaders();
+        
+        let config = {
+            method: 'DELETE',
+            headers:headers
+        }
+        let res = await fetch(`${url}/room/delete/${codigo}`, config);
+        let json = await res.json();
+        return json
+    }
     static async getAllOfUser (body){
         let headers= this.getHeaders();
         

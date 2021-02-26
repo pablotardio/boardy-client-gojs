@@ -19,8 +19,10 @@ const useStyles = makeStyles({
     },
     
   });
-const RoomCardWidget = ({nombre,descripcion}) => {
+  
+const RoomCardWidget = ({nombre,descripcion,handleClickDelete,handleClickBegin}) => {
     const classes = useStyles();
+    
 	return (
 		
             <Grid item xs={3} >
@@ -40,7 +42,7 @@ const RoomCardWidget = ({nombre,descripcion}) => {
 				</CardContent>
 				<CardActions>
 					<Button size="small" color="primary">Iniciar</Button>
-					<Button size="small" color="primary">Eliminar</Button>
+					<Button size="small" onClick={handleClickDelete} color="primary">Eliminar</Button>
 				</CardActions>
                 
 			</Card>

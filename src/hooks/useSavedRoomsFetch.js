@@ -13,6 +13,10 @@ const useSavedRoomsFetch=()=>{
        const roomsJSON= await RoomProvider.getAllOfUser();
         setRooms(roomsJSON);
     }
-    return [rooms];
+    const deleteRoom=async(roomId)=>{
+        await RoomProvider.delete(roomId);
+        getAllRooms();
+    }
+    return [rooms,deleteRoom];
 }
 export default useSavedRoomsFetch

@@ -123,8 +123,9 @@ function RoomPage() {
 	};
 
 	const handleModelChange = (changes) => {
-		console.log(changes);
-		alert("GoJS model changed!");
+		// console.log(changes);
+		// alert("GoJS model changed!");
+		console.log('GoJS model changed!');
 		const diagram = diagramController.getDiagram();
 		emitDiagramNodeChanges(diagram.model.toJson());
 	};

@@ -16,7 +16,7 @@ import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
 import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import FormSaveDialogWidget from "../widgets/Room/FormSaveDialogWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
-const DIAGRAM_LOAD='diagramLoad' //Session Storage item
+
 function RoomPage() {
 	const [openAlert, setOpenAlert] = useState(false);
 	const [openSaveNewAlert, setOpenSaveNewAlert] = useState(false);
@@ -89,20 +89,7 @@ function RoomPage() {
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
 	});
-	//Probando Cargar un diagrama cuando se construye 
-
-		useEffect(() => {
-			
-			diagramController.setDiagram({
-				linkKeyProperty: "id01", //toFixTheBug
-				nodeDataArray: [
-					{ key: 1, text: "S", category: "Start" },
-					{ key: 2, text: "E", category: "End" },
-				],
-				linkDataArray: [{ from: 1, to: 2 }],
-			})
 	
-		}, [diagramController]);
 	
 	
 	const {

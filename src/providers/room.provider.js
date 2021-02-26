@@ -41,6 +41,21 @@ class RoomProvider {
         let json = await res.json();
         return json
     }
+    /**
+     * To fetch a specific diagram
+     * @param {*} codigo  the code of the room  (not id)
+     */
+    static async getDiagramOfRoom(codigo) {
+        let headers= this.getHeaders();
+        
+        let config = {
+            method: 'GET',
+            headers:headers
+        }
+        let res = await fetch(`${url}/room/${codigo}/diagram`, config);
+        let json = await res.json();
+        return json
+    }
     static async delete(codigo) {
         let headers= this.getHeaders();
         

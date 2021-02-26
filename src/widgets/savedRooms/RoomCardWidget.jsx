@@ -41,7 +41,7 @@ const RoomCardWidget = ({nombre,descripcion,handleClickDelete,handleClickBegin})
 					</Typography>
 				</CardContent>
 				<CardActions>
-					<Button size="small" color="primary">Iniciar</Button>
+					<Button size="small" onClick={handleClickBegin} color="primary">Iniciar</Button>
 					<Button size="small" onClick={handleClickDelete} color="primary">Eliminar</Button>
 				</CardActions>
                 

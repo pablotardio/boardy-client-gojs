@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import socketIOClient from "socket.io-client";
+import RoomProvider from "../providers/room.provider";
 import useSwitchPermission from "./useSwitchPermission";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
@@ -9,13 +10,21 @@ const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing 
 const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
 const SOCKET_SERVER_URL = "http://localhost:3002";
 const CLOSED_ROOM = "closedRoom";
+const DIAGRAM_LOAD='diagramLoad' //Session Storage item
 const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const [messages, setMessages] = useState([]); // Sent and received messages
 	const [mousesCoord, setMousesCoord] = useState([]); //sent mouse movement
 	const { switchList, setSwitchList, toggleSwitch } = useSwitchPermission();
 	const history = useHistory();
 	const socketRef = useRef();
+		//Probando Cargar un diagrama cuando se construye 
 
+		useEffect(() => {
+			if(sessionStorage.getItem(DIAGRAM_LOAD)=='true'){
+			loadSavedDiagram(roomId);
+			
+		}
+		}, [diagramController]);
 	useEffect(() => {
 		// Creates a WebSocket connection
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
@@ -126,6 +135,12 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 		//cambiamos visualmente el switch
 		toggleSwitch(socketId,r,w);
 	};
+	const loadSavedDiagram=async(roomId)=>{
+		const json=await RoomProvider.getDiagramOfRoom(roomId);
+		console.log('Cargando diagrama guardado');
+		diagramController.setDiagram(json.sala.diagrama);
+		sessionStorage.setItem(DIAGRAM_LOAD,'false');
+	}
 	return {
 		emitDiagramNodeChanges,
 		messages,

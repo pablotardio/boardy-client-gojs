@@ -10,7 +10,7 @@ import SavedRoomsPage from "./pages/SavedRoomsPage";
 function App() {
 	const vistasLocal = localStorage.getItem("vistas");
 	const [vistas, setvistas] = useState(
-		vistasLocal == null ? [] : JSON.parse(vistasLocal)
+		vistasLocal == null ? null : JSON.parse(vistasLocal)
 	);
 	const [showChat, setShowChat] = useState(false);
   // const [toggleDrawerChat, settoggleDrawerChat] = useState(()=>);
@@ -26,7 +26,7 @@ function App() {
 			<div className="app">
 				<Switch>
 					{/* <Route path="/demo1" component={DemoOne} /> */}
-					<Route path="/home" component={HomePage} />
+					
 					<Route path="/mainMenu" component={MenuPrincipalPage} />
 					<Route path="/misPizarras" component={SavedRoomsPage} />
 					
@@ -43,6 +43,7 @@ function App() {
 							<RoomPage  ></RoomPage>
 						)}
 					/>
+					<Route path="/home" component={HomePage} />
 					{/* <Route component={Menu} /> */}
 				</Switch>
 			</div>

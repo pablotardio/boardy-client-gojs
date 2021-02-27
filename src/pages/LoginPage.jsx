@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import AuthProvider from "../providers/auth.provider";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
 	return (
@@ -61,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const  LoginPage = ({updateNav}) => {
+	const history = useHistory();
 	const [form, setForm] = useState({ email: "", password: "" });
 	const classes = useStyles();
 
@@ -72,6 +74,7 @@ const  LoginPage = ({updateNav}) => {
       localStorage.setItem('token',json.token);
       localStorage.setItem('vistas',JSON.stringify(json.vistas));
 	  localStorage.setItem('userData',JSON.stringify(json.userData));
+	  history.push('mainMenu');
     }
    
     updateNav();

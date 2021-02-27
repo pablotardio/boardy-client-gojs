@@ -60,6 +60,7 @@ const NavbarWidget = ({ parentStateVistas, isChatActive, updateNav }) => {
 			console.log("Cerrando sesion");
 			localStorage.clear();
 			updateNav();
+			history.push('/home');	
 		},
 	};
 	/**

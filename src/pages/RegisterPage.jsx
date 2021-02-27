@@ -55,7 +55,7 @@ export default function RegisterPage({updateNav}) {
 
 	const handleSubmit =async (e) => {
 		e.preventDefault();
-		const json = await AuthProvider.register({...form,nombre:`${form.firstName} ${form.lastName}`});
+		const json = await AuthProvider.register({...form,nombre:`${form.firstName} ${form.lastName}`,rolId:2});
 	
     if(json.token){
       localStorage.setItem('token',json.token);

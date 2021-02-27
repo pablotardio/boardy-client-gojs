@@ -3,12 +3,14 @@ import { useHistory } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import RoomProvider from "../providers/room.provider";
 import useSwitchPermission from "./useSwitchPermission";
+import urlProvider from "../providers/url.provider";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
 const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing permissions
 const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
-const SOCKET_SERVER_URL = "http://localhost:3002";
+
+const SOCKET_SERVER_URL = urlProvider;
 const CLOSED_ROOM = "closedRoom";
 const DIAGRAM_LOAD='diagramLoad' //Session Storage item
 const useRoom = (roomId, roomPass, diagramController, userData) => {

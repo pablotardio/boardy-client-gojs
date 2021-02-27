@@ -1,6 +1,6 @@
-import urlProvider from "./url.provider";
+import APIurlProvider from "./url.provider";
 
-const url = urlProvider;
+const url = APIurlProvider;
 class RoomProvider {
      
     static async verifySave(body) {

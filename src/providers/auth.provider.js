@@ -19,6 +19,22 @@ class AuthProvider {
         //console.log(json);
         return json
     }
+    static async register(body) {
+        let headers= {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        // console.log(headers);
+        let config = {
+            method: 'POST',
+            headers:headers,
+            body: JSON.stringify(body)
+        }
+        let res = await fetch(`${url}/register`, config);
+        let json = await res.json();
+        //console.log(json);
+        return json
+    }
     static getHeaders=()=>{
         return {
             'Accept': 'application/json',

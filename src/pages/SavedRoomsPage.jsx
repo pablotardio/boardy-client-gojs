@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import useSavedRoomsFetch from "../hooks/useSavedRoomsFetch";
 import RoomCardWidget from "../widgets/savedRooms/RoomCardWidget";
+
 const DIAGRAM_LOAD='diagramLoad' //Session Storage item
 const SavedRoomsPage = () => {
 	const [savedRooms, deleteRoom] = useSavedRoomsFetch();

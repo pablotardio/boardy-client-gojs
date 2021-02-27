@@ -16,8 +16,9 @@ import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
 import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import FormSaveDialogWidget from "../widgets/Room/FormSaveDialogWidget";
 import DiagramContainer from "../widgets/Room/ReactFlowy";
-
+const TIPO_PARTICIPANTE = "tipoParticipante";
 function RoomPage() {
+	const guestType = sessionStorage.getItem(TIPO_PARTICIPANTE);
 	const [openAlert, setOpenAlert] = useState(false);
 	const [openSaveNewAlert, setOpenSaveNewAlert] = useState(false);
 	const [alertSave, setAlertSave] = useState({
@@ -40,10 +41,15 @@ function RoomPage() {
 		},
 		handleSubmit: async () => {
 			try {
-				console.log('submited');
+				console.log("submited");
 				const diagram = diagramController.getDiagram();
 				const stringDiagram = JSON.stringify(diagram.model.toJson());
-				const json=await RoomProvider.create({ ...form,codigo:roomId,password:password, diagrama: diagram.model.toJson() });
+				const json = await RoomProvider.create({
+					...form,
+					codigo: roomId,
+					password: password,
+					diagrama: diagram.model.toJson(),
+				});
 				console.log(json);
 				setOpenSaveNewAlert(false);
 				setOpenAlert(false);
@@ -52,7 +58,7 @@ function RoomPage() {
 			}
 		},
 	};
-	
+
 	const [form, setForm] = useState({
 		nombre: "",
 		descripcion: "",
@@ -70,6 +76,16 @@ function RoomPage() {
 		position: "blocked",
 		zIndex: "4",
 	};
+	const styleFChip = {
+		margin: 0,
+		top: "auto",
+		// right: 20,
+		// bottom: 20,
+		left: "auto",
+		right: "auto",
+		position: "fixed",
+		zIndex: "5",
+	};
 	//    se puede obtener los parametros de un compenente que se linkee sin ninguna prop
 	//    const { roomId, password } = props.match.params;
 	// se puede hacer con mas de una prop
@@ -81,6 +97,7 @@ function RoomPage() {
 		bottom: false,
 		right: false,
 	});
+
 	const anchor = "right";
 	const { roomId, password } = useParams();
 	const [diagramController, setDiagramController] = useState({
@@ -89,10 +106,9 @@ function RoomPage() {
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
 	});
-	
-	
-	
+
 	const {
+		canEditText,
 		switchData,
 		messages,
 		sendMessage,
@@ -125,7 +141,7 @@ function RoomPage() {
 	const handleModelChange = (changes) => {
 		// console.log(changes);
 		// alert("GoJS model changed!");
-		console.log('GoJS model changed!');
+		console.log("GoJS model changed!");
 		const diagram = diagramController.getDiagram();
 		emitDiagramNodeChanges(diagram.model.toJson());
 	};
@@ -158,12 +174,12 @@ function RoomPage() {
 		if (accion == "update") {
 			submitAlertFunction = () => {
 				//si se debe actualizar solo la guardo.
-				const currentDiagramJSON = (diagramController
-					.getDiagram())
+				const currentDiagramJSON = diagramController
+					.getDiagram()
 					.model.toJson();
-				
+
 				RoomProvider.update({ diagrama: currentDiagramJSON }, roomId);
-				setOpenAlert(false)
+				setOpenAlert(false);
 			};
 		} else {
 			submitAlertFunction = () => {
@@ -173,6 +189,18 @@ function RoomPage() {
 		}
 		return { submitAlertFunction };
 	};
+	/**
+	 * It will return a Widget/component depending of their type
+	 * @param {*} guestType
+	 * @param {*} Widget
+	 */
+	const returnWidgetFor = (userType, Widget) => {
+		if (guestType == userType) {
+			return Widget;
+		}
+		return "";
+	};
+
 	return (
 		<div
 			style={{ backgroundColor: "#9fe3da", height: "700px" }}
@@ -225,23 +253,34 @@ function RoomPage() {
 			>
 				<Message />
 			</Fab>
-			<Fab
-				style={styleFAB}
-				onClick={toggleDrawer("permissionRight", true)}
-				color="primary"
-				aria-label="add"
-			>
-				<Person />
-			</Fab>
-			<Fab
-				style={styleFAB}
-				onClick={handleClickSave}
-				color="primary"
-				aria-label="add"
-			>
-				<SaveRounded />
-			</Fab>
-
+			{returnWidgetFor(
+				"host",
+				<Fab
+					style={styleFAB}
+					onClick={toggleDrawer("permissionRight", true)}
+					color="primary"
+					aria-label="add"
+				>
+					<Person />
+				</Fab>
+			)}
+			{returnWidgetFor(
+				"host",
+				<Fab
+					
+					style={styleFAB}
+					onClick={handleClickSave}
+					color="secondary"
+					aria-label="add"
+				>
+					<SaveRounded />
+				</Fab>
+			)}
+			{returnWidgetFor(
+				"guest",
+				<Chip  style={styleFChip} label={'Editar: '+canEditText} variant="default" />
+				
+			)}
 			<MenuLateralWidget
 				state={state}
 				anchor={anchor}

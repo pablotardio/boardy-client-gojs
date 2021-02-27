@@ -3,30 +3,35 @@ import { useHistory } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import RoomProvider from "../providers/room.provider";
 import useSwitchPermission from "./useSwitchPermission";
-import {urlProvider} from "../providers/url.provider";
+import { urlProvider } from "../providers/url.provider";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
 const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing permissions
 const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
 
-const SOCKET_SERVER_URL = 'https://boardy-server.herokuapp.com';
+const SOCKET_SERVER_URL = "https://boardy-server.herokuapp.com";
 const CLOSED_ROOM = "closedRoom";
-const DIAGRAM_LOAD='diagramLoad' //Session Storage item
+const DIAGRAM_LOAD = "diagramLoad"; //Session Storage item
 const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const [messages, setMessages] = useState([]); // Sent and received messages
 	const [mousesCoord, setMousesCoord] = useState([]); //sent mouse movement
 	const { switchList, setSwitchList, toggleSwitch } = useSwitchPermission();
+	const  [canEditText, setCanEditText] = useState('Desactivado');
 	const history = useHistory();
 	const socketRef = useRef();
-		//Probando Cargar un diagrama cuando se construye 
+	//Probando Cargar un diagrama cuando se construye
 
-		useEffect(() => {
-			if(sessionStorage.getItem(DIAGRAM_LOAD)=='true'){
+	useEffect(() => {
+		if (sessionStorage.getItem(DIAGRAM_LOAD) == "true") {
 			loadSavedDiagram(roomId);
-			
+			// si es guest osea invitado debo desactivarle la funcion de diagramar
 		}
-		}, [diagramController]);
+		if (sessionStorage.getItem("tipoParticipante") == "guest") {
+			console.log("es guest ");
+			diagramController.setDiagramReadOnly(true);
+		}
+	}, [diagramController]);
 	useEffect(() => {
 		// Creates a WebSocket connection
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
@@ -43,7 +48,8 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 
 		listenJoinLeave();
 		listenToggleSwitch();
-		listenClosedRoom()
+		listenClosedRoom();
+
 		// Destroys the socket reference
 		// when the connection is closed
 		return () => {
@@ -76,8 +82,8 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	 */
 	const listenJoinLeave = () => {
 		socketRef.current.on(GUEST_JOIN_LEAVE, (data) => {
-			console.log('se unio-retiro alguien');
-			
+			console.log("se unio-retiro alguien");
+
 			console.log(data);
 			setSwitchList(data.guests);
 			//Luego le enviamos a todos los invitados el diagrama.
@@ -90,7 +96,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	 */
 	const listenClosedRoom = () => {
 		socketRef.current.on(CLOSED_ROOM, (data) => {
-			console.log('se cerro la sala');
+			console.log("se cerro la sala");
 			history.goBack();
 		});
 	};
@@ -129,31 +135,34 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	};
 	const listenToggleSwitch = () => {
 		socketRef.current.on(CHANGED_PERMISSION, (data) => {
-			console.log('list of permissions',data);
+			console.log("list of permissions", data);
 			//data should be a boolean containing the new permission value
 			diagramController.setDiagramReadOnly(data.readOnly);
+			data.readOnly?setCanEditText('Desactivado'):setCanEditText('Activado');
+			
 		});
 	};
-	
-	const toggleSwitchSocket = (socketId,r,w) => {
+
+	const toggleSwitchSocket = (socketId, r, w) => {
 		//emitimos el cambio para cambiar la lista y decirle a un usuarios que ya tiene permisos
-		socketRef.current.emit(CHANGE_A_PERMISSION,{socketId,r,w});
+		socketRef.current.emit(CHANGE_A_PERMISSION, { socketId, r, w });
 		//cambiamos visualmente el switch
-		toggleSwitch(socketId,r,w);
+		toggleSwitch(socketId, r, w);
 	};
-	const loadSavedDiagram=async(roomId)=>{
-		const json=await RoomProvider.getDiagramOfRoom(roomId);
-		console.log('Cargando diagrama guardado');
+	const loadSavedDiagram = async (roomId) => {
+		const json = await RoomProvider.getDiagramOfRoom(roomId);
+		console.log("Cargando diagrama guardado");
 		diagramController.setDiagram(json.sala.diagrama);
-		sessionStorage.setItem(DIAGRAM_LOAD,'false');
-	}
+		sessionStorage.setItem(DIAGRAM_LOAD, "false");
+	};
 	return {
+		canEditText,
 		emitDiagramNodeChanges,
 		messages,
 		sendMessage,
 		mousesCoord,
 		emitMouseActivity,
-		switchData: { switchList, setSwitchList, toggleSwitchSocket },
+		switchData: {switchList, setSwitchList, toggleSwitchSocket },
 	};
 };
 

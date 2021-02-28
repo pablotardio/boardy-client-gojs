@@ -1,9 +1,12 @@
 import { Chip, Fab, ListItem } from "@material-ui/core";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco,xcode } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import {
 	Message,
 	Person,
 	SaveAltRounded,
-	SaveRounded,Code
+	SaveRounded,
+	Code,
 } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -34,9 +37,9 @@ function RoomPage() {
 		},
 	});
 
-	const [codeAlert,setCodeAlert]	= useState({
+	const [codeAlert, setCodeAlert] = useState({
 		title: "Codigo Generado exitosamente!",
-		description: '',
+		description: "",
 		/**operacion para abrir el modal */
 		handleClickClose: () => {
 			setOpenCodeAlert(false);
@@ -182,13 +185,22 @@ function RoomPage() {
 		});
 		setOpenAlert(true);
 	};
-	const handleClickCodeGenerator=async()=>{
-		const diagram=diagramController.getDiagram();
-		
-		const json=await RoomProvider.getGeneratedCode({diagram:diagram.model.toJson()})
-		setCodeAlert({...codeAlert,description:`${json.code}`});
+	const handleClickCodeGenerator = async () => {
+		const diagram = diagramController.getDiagram();
+
+		const json = await RoomProvider.getGeneratedCode({
+			diagram: diagram.model.toJson(),
+		});
+		setCodeAlert({
+			...codeAlert,
+			description: (
+				<SyntaxHighlighter language="javascript" showLineNumbers  style={xcode}>
+					{`${json.code}`}
+				</SyntaxHighlighter>
+			),
+		});
 		setOpenCodeAlert(true);
-	}
+	};
 	const asignarTipoDeGuardado = (accion) => {
 		let submitAlertFunction;
 		if (accion == "update") {
@@ -294,7 +306,6 @@ function RoomPage() {
 			{returnWidgetFor(
 				"host",
 				<Fab
-					
 					style={styleFAB}
 					onClick={handleClickSave}
 					color="secondary"
@@ -306,7 +317,6 @@ function RoomPage() {
 			{returnWidgetFor(
 				"host",
 				<Fab
-					
 					style={styleFAB}
 					onClick={handleClickCodeGenerator}
 					color="secondary"
@@ -317,8 +327,11 @@ function RoomPage() {
 			)}
 			{returnWidgetFor(
 				"guest",
-				<Chip  style={styleFChip} label={'Editar: '+canEditText} variant="default" />
-				
+				<Chip
+					style={styleFChip}
+					label={"Editar: " + canEditText}
+					variant="default"
+				/>
 			)}
 			<MenuLateralWidget
 				state={state}

@@ -18,6 +18,7 @@ export default function DialogWidget({
 	title,
 	description,
 	handleClose,
+	content
 }) {
 	return (
 		<div>
@@ -30,7 +31,7 @@ export default function DialogWidget({
 				<DialogContent>
 					<DialogContentText>{description}</DialogContentText>
 				
-					
+					{content}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">

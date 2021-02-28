@@ -39,7 +39,8 @@ function RoomPage() {
 
 	const [codeAlert, setCodeAlert] = useState({
 		title: "Codigo Generado exitosamente!",
-		description: "",
+		description: "Este es su codigo generado:",
+		content:'',
 		/**operacion para abrir el modal */
 		handleClickClose: () => {
 			setOpenCodeAlert(false);
@@ -193,7 +194,7 @@ function RoomPage() {
 		});
 		setCodeAlert({
 			...codeAlert,
-			description: (
+			content: (
 				<SyntaxHighlighter language="javascript" showLineNumbers  style={xcode}>
 					{`${json.code}`}
 				</SyntaxHighlighter>
@@ -260,6 +261,7 @@ function RoomPage() {
 				handleSubmit={codeAlert.handleSubmit}
 				title={codeAlert.title}
 				description={codeAlert.description}
+				content={codeAlert.content}
 			></DialogWidget>
 			<FlowgrammerWidget
 				setDiagramController={setDiagramController}

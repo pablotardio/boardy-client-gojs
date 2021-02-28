@@ -668,7 +668,7 @@ function getDiagram(){
 // render function...
 function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 	useEffect(() => {
-		if (setDiagramController != undefined)
+		if (setDiagramController !== undefined)
 			setDiagramController({
 				getDiagram,
 				setDiagram,
@@ -676,7 +676,7 @@ function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 				setDiagramReadOnly,
 			});
 		return () => {};
-	}, []);
+	}, [setDiagramController]);
 
 	return (
 		<div>

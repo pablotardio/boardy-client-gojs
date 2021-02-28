@@ -1,14 +1,13 @@
-import { Chip, Fab, ListItem } from "@material-ui/core";
+import { Chip, Fab } from "@material-ui/core";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco,xcode } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { xcode } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import {
 	Message,
 	Person,
-	SaveAltRounded,
 	SaveRounded,
 	Code,
 } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
 import RoomProvider from "../providers/room.provider";
@@ -18,7 +17,6 @@ import ChatWidget from "../widgets/Room/ChatWidget";
 import FlowgrammerWidget from "../widgets/Room/FlowgrammerWidget";
 import PermissionListWidget from "../widgets/Room/PermissionListWidget";
 import FormSaveDialogWidget from "../widgets/Room/FormSaveDialogWidget";
-import DiagramContainer from "../widgets/Room/ReactFlowy";
 const TIPO_PARTICIPANTE = "tipoParticipante";
 function RoomPage() {
 	const guestType = sessionStorage.getItem(TIPO_PARTICIPANTE);
@@ -60,7 +58,6 @@ function RoomPage() {
 			try {
 				console.log("submited");
 				const diagram = diagramController.getDiagram();
-				const stringDiagram = JSON.stringify(diagram.model.toJson());
 				const json = await RoomProvider.create({
 					...form,
 					codigo: roomId,

@@ -13,7 +13,7 @@ function App() {
 	const [vistas, setvistas] = useState(
 		vistasLocal == null ? null : JSON.parse(vistasLocal)
 	);
-	const [showChat, setShowChat] = useState(false);
+	// const [showChat, setShowChat] = useState(false);
   // const [toggleDrawerChat, settoggleDrawerChat] = useState(()=>);
 	const updateNav = () =>
 		setvistas(JSON.parse(localStorage.getItem("vistas")));
@@ -21,7 +21,7 @@ function App() {
 		<BrowserRouter>
 			<NavbarWidget
 				parentStateVistas={vistas}
-				isChatActive={showChat}
+				// isChatActive={showChat}
 				updateNav={updateNav}
 			></NavbarWidget>
 			<div className="app">

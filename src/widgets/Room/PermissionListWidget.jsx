@@ -1,15 +1,10 @@
 import {
-	Chip,
-	Fab,
     FormControlLabel,
 	Grid,
 	ListItem,
-	ListItemText,
     Switch,
-	TextField,
-	Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 const PermissionListWidget = ({ userList, onTogglePermission }) => {
 const handleChange=(e,user)=>{
 	console.log(user);
@@ -18,7 +13,7 @@ const handleChange=(e,user)=>{
 
 	return (
 		<div>
-			<ListItem key={'listPart'+'title'}>Lista de participantes</ListItem>
+			<ListItem key={'listPart title'}>Lista de participantes</ListItem>
 			
 			{userList.map((user, i) => (
 				<div>

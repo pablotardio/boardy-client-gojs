@@ -3,7 +3,6 @@ import {
 	Fab,
 	Grid,
 	ListItem,
-	ListItemText,
 	TextField,
 	Typography,
 } from "@material-ui/core";
@@ -16,7 +15,7 @@ const ChatWidget = ({ messages, onSendMessage }) => {
 	 * return a message in case there is no messagees in the chat
 	 */
 	const _retornarRelleno = () => {
-		if (messages.length == 0)
+		if (messages.length === 0)
 			return (
 				<Chip label="No se ha enviado ningun mensaje" color="secondary" />
 			);

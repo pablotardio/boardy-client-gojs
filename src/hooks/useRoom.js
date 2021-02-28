@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import RoomProvider from "../providers/room.provider";
 import useSwitchPermission from "./useSwitchPermission";
-import { urlProvider } from "../providers/url.provider";
+// import { urlProvider } from "../providers/url.provider";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event of chat
 const DIAGRAM_NODES_CHANGE_EVENT = "diagramNodesChange"; // Name of the event of changing diagram nodes
 const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm

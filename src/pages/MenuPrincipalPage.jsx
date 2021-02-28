@@ -79,7 +79,7 @@ const MenuPrincipalPage = () => {
 	const setAlertContent=(json)=>{
 		let title='';
 		let newHandleSubmit=()=>{}
-		if(json.status=='bad'){
+		if(json.status==='bad'){
 			title='Hubo un problema :('
 			newHandleSubmit= async ()=>{
 				closeAllAlerts();

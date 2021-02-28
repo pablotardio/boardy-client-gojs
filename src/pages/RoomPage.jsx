@@ -7,6 +7,8 @@ import {
 	SaveRounded,
 	Code,
 } from "@material-ui/icons";
+// import prettier from "prettier";
+// import parserBabel from "prettier/parser-babel";
 import React, {  useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
@@ -193,7 +195,8 @@ function RoomPage() {
 			...codeAlert,
 			content: (
 				<SyntaxHighlighter language="javascript" showLineNumbers  style={xcode}>
-					{`${json.code}`}
+					{json.code}
+					{/* {prettier.format(json.code, { semi: false, parser: "babel", plugins:[parserBabel]})} */}
 				</SyntaxHighlighter>
 			),
 		});

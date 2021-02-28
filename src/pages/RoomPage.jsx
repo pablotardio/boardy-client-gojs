@@ -3,7 +3,7 @@ import {
 	Message,
 	Person,
 	SaveAltRounded,
-	SaveRounded,
+	SaveRounded,Code
 } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -21,6 +21,7 @@ function RoomPage() {
 	const guestType = sessionStorage.getItem(TIPO_PARTICIPANTE);
 	const [openAlert, setOpenAlert] = useState(false);
 	const [openSaveNewAlert, setOpenSaveNewAlert] = useState(false);
+	const [openCodeAlert, setOpenCodeAlert] = useState(false);
 	const [alertSave, setAlertSave] = useState({
 		title: "",
 		description: "",
@@ -30,6 +31,18 @@ function RoomPage() {
 		},
 		handleSubmit: async () => {
 			setOpenAlert(false);
+		},
+	});
+
+	const [codeAlert,setCodeAlert]	= useState({
+		title: "Codigo Generado exitosamente!",
+		description: '',
+		/**operacion para abrir el modal */
+		handleClickClose: () => {
+			setOpenCodeAlert(false);
+		},
+		handleSubmit: async () => {
+			setOpenCodeAlert(false);
 		},
 	});
 	const saveNewAlert = {
@@ -169,6 +182,13 @@ function RoomPage() {
 		});
 		setOpenAlert(true);
 	};
+	const handleClickCodeGenerator=async()=>{
+		const diagram=diagramController.getDiagram();
+		
+		const json=await RoomProvider.getGeneratedCode({diagram:diagram.model.toJson()})
+		setCodeAlert({...codeAlert,description:`${json.code}`});
+		setOpenCodeAlert(true);
+	}
 	const asignarTipoDeGuardado = (accion) => {
 		let submitAlertFunction;
 		if (accion == "update") {
@@ -222,6 +242,13 @@ function RoomPage() {
 				title={alertSave.title}
 				description={alertSave.description}
 			></DialogWidget>
+			<DialogWidget
+				open={openCodeAlert}
+				handleClose={codeAlert.handleClickClose}
+				handleSubmit={codeAlert.handleSubmit}
+				title={codeAlert.title}
+				description={codeAlert.description}
+			></DialogWidget>
 			<FlowgrammerWidget
 				setDiagramController={setDiagramController}
 				onModelChange={handleModelChange}
@@ -274,6 +301,18 @@ function RoomPage() {
 					aria-label="add"
 				>
 					<SaveRounded />
+				</Fab>
+			)}
+			{returnWidgetFor(
+				"host",
+				<Fab
+					
+					style={styleFAB}
+					onClick={handleClickCodeGenerator}
+					color="secondary"
+					aria-label="add"
+				>
+					<Code />
 				</Fab>
 			)}
 			{returnWidgetFor(

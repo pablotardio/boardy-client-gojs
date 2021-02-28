@@ -1,6 +1,6 @@
-import APIurlProvider from "./url.provider";
+import urlProvider from "./url.provider";
 
-const url = APIurlProvider;
+const url = urlProvider;
 class RoomProvider {
      
     static async verifySave(body) {
@@ -77,6 +77,19 @@ class RoomProvider {
         }
         let res = await fetch(`${url}/room/all/user`, config);
         let json = await res.json();
+        return json
+    }
+    static async getGeneratedCode(body) {
+        let headers= this.getHeaders();
+        
+        let config = {
+            method: 'POST',
+            headers:headers,
+            body: JSON.stringify(body)
+        }
+        let res = await fetch(`${url}/code`, config);
+        let json = await res.json();
+        
         return json
     }
     static getHeaders=()=>{

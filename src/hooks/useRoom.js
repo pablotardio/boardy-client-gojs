@@ -10,7 +10,7 @@ const GUEST_JOIN_LEAVE = "guestJoinLeave"; // event of joining leaving the roomm
 const CHANGED_PERMISSION = "changedPermission"; // event for receiving changing permissions
 const CHANGE_A_PERMISSION = "changeAPermission"; // event for changing permissions
 
-const SOCKET_SERVER_URL = "http://192.168.1.2:3002";
+const SOCKET_SERVER_URL = "https://boardy-server.herokuapp.com";
 const CLOSED_ROOM = "closedRoom";
 const DIAGRAM_LOAD = "diagramLoad"; //Session Storage item
 const useRoom = (roomId, roomPass, diagramController, userData) => {

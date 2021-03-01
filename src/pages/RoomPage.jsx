@@ -1,15 +1,10 @@
 import { Chip, Fab } from "@material-ui/core";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { xcode } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import {
-	Message,
-	Person,
-	SaveRounded,
-	Code,Add
-} from "@material-ui/icons";
+import { Message, Person, SaveRounded, Code, Add } from "@material-ui/icons";
 // import prettier from "prettier";
 // import parserBabel from "prettier/parser-babel";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useRoom from "../hooks/useRoom";
 import RoomProvider from "../providers/room.provider";
@@ -40,7 +35,7 @@ function RoomPage() {
 	const [codeAlert, setCodeAlert] = useState({
 		title: "Codigo Generado exitosamente!",
 		description: "Este es su codigo generado:",
-		content:'',
+		content: "",
 		/**operacion para abrir el modal */
 		handleClickClose: () => {
 			setOpenCodeAlert(false);
@@ -154,13 +149,18 @@ function RoomPage() {
 
 		setState({ ...state, [stateIndex]: open });
 	};
-
+	const [isFirst, setIsFirst] = useState(true);
 	const handleModelChange = (changes) => {
 		// console.log(changes);
 		// alert("GoJS model changed!");
-		console.log("GoJS model changed!");
-		const diagram = diagramController.getDiagram();
-		emitDiagramNodeChanges(diagram.model.toJson());
+
+		if (!isFirst) {
+			console.log("GoJS model changed!");
+			const diagram = diagramController.getDiagram();
+			emitDiagramNodeChanges(diagram.model.toJson());
+			
+		}
+		setIsFirst(false);
 	};
 	const handleClickButtonPermission = () => {
 		const newModel = {
@@ -195,7 +195,11 @@ function RoomPage() {
 		setCodeAlert({
 			...codeAlert,
 			content: (
-				<SyntaxHighlighter language="javascript" showLineNumbers  style={xcode}>
+				<SyntaxHighlighter
+					language="javascript"
+					showLineNumbers
+					style={xcode}
+				>
 					{json.code}
 					{/* {prettier.format(json.code, { semi: false, parser: "babel", plugins:[parserBabel]})} */}
 				</SyntaxHighlighter>
@@ -203,9 +207,9 @@ function RoomPage() {
 		});
 		setOpenCodeAlert(true);
 	};
-	const handleClickNewDiagram=()=>{
+	const handleClickNewDiagram = () => {
 		diagramController.createNewDiag();
-	}
+	};
 	const asignarTipoDeGuardado = (accion) => {
 		let submitAlertFunction;
 		if (accion == "update") {

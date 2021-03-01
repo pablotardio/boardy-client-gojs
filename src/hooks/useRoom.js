@@ -20,6 +20,7 @@ const useRoom = (roomId, roomPass, diagramController, userData) => {
 	const  [canEditText, setCanEditText] = useState('Desactivado');
 	const history = useHistory();
 	const socketRef = useRef();
+	
 	//Probando Cargar un diagrama cuando se construye
 
 	useEffect(() => {

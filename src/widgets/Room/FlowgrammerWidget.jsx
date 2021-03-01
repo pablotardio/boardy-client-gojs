@@ -349,6 +349,7 @@ function initDiagram() {
 	// 	myDiagram.isModified = false;
 	// }
 	function load() {
+		
 		myDiagram.model = go.Model.fromJson(modelFlowBasic);
 	}
 	// function newDiagram() {

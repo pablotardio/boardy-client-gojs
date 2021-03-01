@@ -19,7 +19,7 @@ const HomePage = () => {
 				<Grid item xs={12}>
 					<Grid container justify="center">
 						<Grid item xs={8}>
-							<Typography component="h1" variant="h4">
+							<Typography component="h1" variant="h4" style={{textAlign:'center'}}>
 								{text}
 							</Typography>
 						</Grid>

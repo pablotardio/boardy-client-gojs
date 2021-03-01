@@ -33,7 +33,7 @@ export default function DialogWidget({
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
-						Cancel
+						Cancelar
 					</Button>
 					<Button onClick={handleSubmit} color="primary">
 						Continuar

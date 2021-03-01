@@ -58,10 +58,10 @@ export default function FormDialogWidget({
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
-						Cancel
+						Cancelar
 					</Button>
 					<Button onClick={handleSubmit} color="primary">
-						Subscribe
+						Continuar
 					</Button>
 				</DialogActions>
 			</Dialog>

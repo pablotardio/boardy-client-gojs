@@ -50,6 +50,21 @@ const modelFlowBasic = {
 	],
 };
 // ...
+//Para el mostrar sacado de https://gojs.net/latest/extensions/Figures.js 
+go.Shape.defineFigureGenerator("Document", function(shape, w, h) {
+	var geo = new go.Geometry();
+	h = h / .8;
+	var fig = new go.PathFigure(0, .7 * h, true);
+	geo.add(fig);
+  
+	fig.add(new go.PathSegment(go.PathSegment.Line, 0, 0));
+	fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+	fig.add(new go.PathSegment(go.PathSegment.Line, w, .7 * h));
+	fig.add(new go.PathSegment(go.PathSegment.Bezier, 0, .7 * h, .5 * w, .4 * h, .5 * w, h).close());
+	geo.spot1 = go.Spot.TopLeft;
+	geo.spot2 = new go.Spot(1, .6);
+	return geo;
+  });
 // two custom figures, for "For Each" loops
 go.Shape.defineFigureGenerator("ForEach", function (shape, w, h) {
 	var param1 = shape ? shape.parameter1 : NaN; // length of triangular area in direction that it is pointing
@@ -166,7 +181,21 @@ function initDiagram() {
 		$(go.Shape, shapeStyle()),
 		$(go.TextBlock, textStyle(), { margin: 4 })
 	);
-
+	// Nodo Mostrar print
+	// define the Node templates
+		
+	myDiagram.nodeTemplateMap.add(
+		"Mostrar",
+		$(
+			go.Node,
+			"Auto",
+			nodeStyle(),
+			{ deletable: true },
+			{ desiredSize: new go.Size(32, 32) },
+			$(go.Shape, "Document", shapeStyle()),
+			$(go.TextBlock, textStyle(), "Mostrar")
+		)
+	);
 	myDiagram.nodeTemplateMap.add(
 		"Start",
 		$(
@@ -456,7 +485,7 @@ function initDiagram() {
 
 		// var fromnode = oldlink.fromNode;
 		var tonode = oldlink.toNode;
-		if (newnode.category === "") {
+		if (newnode.category === ""||"Mostrar") {
 			// add simple step into chain of actions
 			newnode.containingGroup = oldlink.containingGroup;
 			// Reconnect the existing link to the new node
@@ -595,7 +624,7 @@ function initDiagram() {
 					if (link.toNode.isMemberOf(node)) link.toNode = next;
 				});
 			}
-		} else if (node.category === "") {
+		} else if (node.category === ""||'Mostrar') {
 			next = node.findNodesOutOf().first();
 			if (next) {
 				new go.List(node.findLinksInto()).each(function (link) {
@@ -612,6 +641,7 @@ function initDiagram() {
 		nodeTemplateMap: myDiagram.nodeTemplateMap,
 		model: new go.GraphLinksModel([
 			{ text: "Action" },
+			{ text: "Mostrar",category: "Mostrar" },
 			{ text: "For", category: "For" },
 			{ text: "While", category: "While" },
 			{ text: "If", category: "If" },

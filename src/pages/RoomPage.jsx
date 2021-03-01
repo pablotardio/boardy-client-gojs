@@ -5,7 +5,7 @@ import {
 	Message,
 	Person,
 	SaveRounded,
-	Code,
+	Code,Add
 } from "@material-ui/icons";
 // import prettier from "prettier";
 // import parserBabel from "prettier/parser-babel";
@@ -121,6 +121,7 @@ function RoomPage() {
 		setDiagram: (diagram) => {},
 		handleModelChange: () => {},
 		setDiagramReadOnly: () => {},
+		createNewDiag: () => {},
 	});
 
 	const {
@@ -202,6 +203,9 @@ function RoomPage() {
 		});
 		setOpenCodeAlert(true);
 	};
+	const handleClickNewDiagram=()=>{
+		diagramController.createNewDiag();
+	}
 	const asignarTipoDeGuardado = (accion) => {
 		let submitAlertFunction;
 		if (accion == "update") {
@@ -325,6 +329,17 @@ function RoomPage() {
 					aria-label="add"
 				>
 					<Code />
+				</Fab>
+			)}
+			{returnWidgetFor(
+				"host",
+				<Fab
+					style={styleFAB}
+					onClick={handleClickNewDiagram}
+					color="secondary"
+					aria-label="add"
+				>
+					<Add />
 				</Fab>
 			)}
 			{returnWidgetFor(

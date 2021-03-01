@@ -674,6 +674,7 @@ function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 				setDiagram,
 				handleModelChange,
 				setDiagramReadOnly,
+				createNewDiag,
 			});
 		return () => {};
 	}, [setDiagramController]);
@@ -745,13 +746,13 @@ function FlowgrammerWidget({ onModelChange, setDiagramController }) {
 					// ]}
 					onModelChange={onModelChange}
 				/>
-				<button onClick={() => console.log(myDiagram.model.toJson())}>
+				{/* <button onClick={() => console.log(myDiagram.model.toJson())}>
 					{" "}
 					Imprimir Modelo
-				</button>
-				<button onClick={() => createNewDiag()}> nuevo</button>
+				</button> */}
+				{/* <button onClick={() => createNewDiag()}> nuevo</button> */}
 			</div>
-			...
+			
 			{/* <textarea id="mySavedModel" style={{ width: "100%", height: "200px" }}>
 				{}
 			</textarea> */}

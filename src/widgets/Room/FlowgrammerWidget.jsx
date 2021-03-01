@@ -11,7 +11,7 @@ const modelFlowBasic = {
 	nodeDataArray: [
 		{ key: 1, text: "S", category: "Start" },
 		{ key: -1, isGroup: true, cat: "For" },
-		{ key: 2, text: "For Each", category: "For", group: -1 },
+		{ key: 2, text: "For ", category: "For", group: -1 },
 		{ key: 3, text: "Action 1", group: -1 },
 		{ key: -2, isGroup: true, cat: "If", group: -1 },
 		{ key: 4, text: "If", category: "If", group: -2 },
@@ -20,7 +20,7 @@ const modelFlowBasic = {
 		{ key: -3, isGroup: true, cat: "For", group: -2 },
 		{
 			key: 7,
-			text: "For Each\n(nested)",
+			text: "For (nested)",
 			category: "For",
 			group: -3,
 		},
@@ -199,7 +199,7 @@ function initDiagram() {
 			nodeStyle(),
 			{ minSize: new go.Size(64, 32) },
 			$(go.Shape, "ForEach", shapeStyle()),
-			$(go.TextBlock, textStyle(), "For Each", { margin: 4 })
+			$(go.TextBlock, textStyle(), "For", { margin: 4 })
 		)
 	);
 
@@ -612,7 +612,7 @@ function initDiagram() {
 		nodeTemplateMap: myDiagram.nodeTemplateMap,
 		model: new go.GraphLinksModel([
 			{ text: "Action" },
-			{ text: "For Each", category: "For" },
+			{ text: "For", category: "For" },
 			{ text: "While", category: "While" },
 			{ text: "If", category: "If" },
 			{ text: "Switch", category: "Switch" },

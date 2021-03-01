@@ -14,6 +14,7 @@ const SavedRoomsPage = () => {
 	};
     const handleClickBegin = (room) => {
 		sessionStorage.setItem(DIAGRAM_LOAD,'true');
+		sessionStorage.setItem('tipoParticipante','host');
         history.push(`/room/${room.codigo}/${room.password}`);
 	};
 	return (

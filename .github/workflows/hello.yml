@@ -1,0 +1,16 @@
+name: Say hello
+#Cuando haga push en la rama main
+on:
+  push:
+    branches:
+      - main
+#indicamos que trabajo hara este workflow
+jobs:
+  hello_world:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Echo the message
+        run: |
+          echo "Hola midu!"
+
+

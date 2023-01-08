@@ -3,14 +3,19 @@ name: Say hello
 on:
   push:
     branches:
-      - main
+      - feature/github-actions-testing
 #indicamos que trabajo hara este workflow
 jobs:
   hello_world:
     runs-on: ubuntu-18.04
+    #en los steps el "name" es opcional pero se
+    #debe separar por guiones
     steps:
       - name: Echo the message
         run: |
           echo "Hola midu!"
+      - name: Dime la fecha
+        run: date
+      - run: ls -l
 
 
